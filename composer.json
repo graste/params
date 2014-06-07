@@ -1,0 +1,39 @@
+{
+    "name": "graste/params",
+    "type": "library",
+    "description": "Simple array wrapper to ease handling of parameters or options.",
+    "keywords": ["parameters", "options"],
+    "homepage": "https://github.com/graste/params",
+    "license": "CC-BY-SA-3.0",
+    "authors": [
+        {
+            "name": "Steffen Gransow",
+            "email": "graste@mivesto.de",
+            "homepage": "http://mivesto.de",
+            "role": "Developer"
+        }
+    ],
+    "support": {
+        "email": "params@mivesto.de",
+        "issues": "https://github.com/graste/params/issues",
+        "wiki": "https://github.com/graste/params/wiki",
+        "irc": "irc://irc.freenode.org/environaut",
+        "source": "https://github.com/graste/params"
+    },
+    "prefer-stable": true,
+    "config": {
+        "vendor-dir": "vendor"
+    },
+    "require": {
+        "php": ">=5.3.3"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~3.7.22",
+        "squizlabs/php_codesniffer": "~1.4.5"
+    },
+    "autoload": {
+        "psr-0": {
+            "Params\\": "src/"
+        }
+    }
+}
