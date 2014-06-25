@@ -8,7 +8,10 @@ class ParametersTest extends BaseTestCase
 {
     public function testConstruct()
     {
-        $this->assertEquals('1337', 1337);
+        $p = new Parameters();
+
+        $this->assertEquals(0, count($p->toArray()));
+        $this->assertEmpty($p->getKeys());
     }
 }
 
