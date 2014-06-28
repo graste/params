@@ -2,11 +2,14 @@
 
 namespace Params;
 
+use InvalidArgumentException;
+use ArrayAccess;
+
 /**
  * Class that wraps an associative array for
  * more convenient access of keys and values.
  */
-class Parameters
+class Parameters implements ArrayAccess
 {
     /**
      * @var array
@@ -71,6 +74,67 @@ class Parameters
     }
 
     /**
+     * @param string $key name of key
+     * @param mixed $value value to set for key
+     */
+    public function offsetSet($key, $value)
+    {
+        $this->parameters[$key] = $value;
+    }
+
+    /**
+     * @param string $key name of key
+     *
+     * @return mixed value of that key
+     *
+     * @throws \InvalidArgumentException if key does not exist
+     */
+    public function offsetGet($key)
+    {
+        if (!$this->has($key)) {
+            throw new InvalidArgumentException(sprintf('Key "%s" is not defined.', $key));
+        }
+
+        return $this->get($key);
+    }
+
+    /**
+     * Returns whether the key exists or not.
+     *
+     * @param string $key name of key to check
+     *
+     * @return bool true, if key exists; false otherwise
+     */
+    public function offsetExists($key)
+    {
+        return array_key_exists($key, $this->parameters);
+    }
+
+    /**
+     * Unsets the given key's value if it's set.
+     *
+     * @param string $key name of key to unset
+     *
+     * @return void
+     */
+    public function offsetUnset($key)
+    {
+        if (isset($this->parameters[$key])) {
+            unset($this->parameters[$key]);
+        }
+    }
+
+    /**
+     * Returns all first level key names.
+     *
+     * @return array of keys
+     */
+    public function keys()
+    {
+        return array_keys($this->parameters);
+    }
+
+    /**
      * Returns all first level key names.
      *
      * @return array of keys
@@ -78,6 +142,32 @@ class Parameters
     public function getKeys()
     {
         return array_keys($this->parameters);
+    }
+
+    /**
+     * Adds the given parameters to the current ones.
+     *
+     * @param array|Parameters $parameters array of key-value pairs or other Parameters instance
+     *
+     * @return Parameters self instance for fluent API
+     */
+    public function add($parameters = array())
+    {
+        if (is_array($parameters)) {
+            foreach ($parameters as $key => $value) {
+                $this->set($key, $value);
+            }
+        } elseif ($parameters instanceof Parameters) {
+            foreach ($parameters->getKeys() as $key) {
+                $this->set($key, $parameters->get($key));
+            }
+        } else {
+            throw new InvalidArgumentException(
+                'Given parameters must be of type array or Params\Parameters. ' . gettype($parameters) . ' given.'
+            );
+        }
+
+        return $this;
     }
 
     /**
@@ -96,5 +186,11 @@ class Parameters
     public function clear()
     {
         $this->parameters = array();
+    }
+
+    public function search($path)
+    {
+        $result = '';
+        return $result;
     }
 }
