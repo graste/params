@@ -1,8 +1,8 @@
 {
     "name": "graste/params",
     "type": "library",
-    "description": "Eases array handling. Retrieve nested values, search via expressions or get with default values.",
-    "keywords": ["parameters", "options", "array"],
+    "description": "Array wrapper that eases the retrieval of values.",
+    "keywords": ["parameters", "options", "array", "search", "library"],
     "homepage": "https://github.com/graste/params",
     "license": "CC-BY-SA-3.0",
     "authors": [
@@ -26,12 +26,17 @@
     },
     "require-dev": {
         "phpunit/phpunit": "~4.0",
-        "squizlabs/php_codesniffer": "~1.4.5",
+        "squizlabs/php_codesniffer": "~1.5.3",
         "satooshi/php-coveralls": "0.6.*"
     },
     "autoload": {
         "psr-0": {
             "Params\\": "src/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.1-dev"
         }
     }
 }
