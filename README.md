@@ -1,7 +1,7 @@
 # Params
 
 [![Latest-Stable-Version](https://poser.pugx.org/graste/params/version.png)][1]
-[![License](https://poser.pugx.org/graste/params/license.svg)][1]
+[![License](https://poser.pugx.org/graste/params/license.svg)][14]
 [![Latest Unstable Version](https://poser.pugx.org/graste/params/v/unstable.svg)][1]
 [![Build Status](https://secure.travis-ci.org/graste/params.png)][2]
 [![Coverage Status](https://coveralls.io/repos/graste/params/badge.png)][3]
@@ -124,3 +124,4 @@ See [`CHANGELOG.md`](CHANGELOG.md) for more information about changes.
 [11]: https://github.com/mtdowling/jmespath.php "JMESPath on github"
 [12]: http://help.github.com/forking/ "Github docs on forking a project"
 [13]: http://help.github.com/pull-requests/ "Github docs on pull requests"
+[14]: LICENSE.md "license file with link to original full text of the license"
