@@ -69,6 +69,32 @@ class ParametersTest extends BaseTestCase
         $this->assertEquals(null, $params->get('nil', 'default'));
     }
 
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testSetEmptyKeyFails()
+    {
+        $params = new Parameters(array('foo' => 'trololo'));
+        $params->set('', 'bar');
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testSetNullKeyFails()
+    {
+        $params = new Parameters(array('foo' => 'trololo'));
+        $params->set(null, 'bar');
+    }
+
+    public function testFluentApi()
+    {
+        $params = new Parameters(array('foo' => 'trololo'));
+
+        $this->assertInstanceOf('Params\Parameters', $params->set('fluent', 'yes'));
+        $this->assertInstanceOf('Params\Parameters', $params->add(array('api' => 'stuff')));
+    }
+
     public function testGetKeys()
     {
         $params = new Parameters(array('foo' => 'trololo'));
@@ -91,6 +117,19 @@ class ParametersTest extends BaseTestCase
         $params = new Parameters(array('foo' => 'bar'));
         $this->assertEquals('bar', $params['foo']);
         $this->assertEquals(array('foo' => 'bar'), $params->toArray());
+    }
+
+    public function testArrayAccessExists()
+    {
+        $params = new Parameters(array('foo' => 'bar'));
+        $this->assertTrue(isset($params['foo']));
+    }
+
+    public function testArrayAccessUnset()
+    {
+        $params = new Parameters(array('foo' => 'bar'));
+        unset($params['foo']);
+        $this->assertFalse(isset($params['foo']));
     }
 
     public function testArrayAccessSet()
@@ -151,16 +190,87 @@ class ParametersTest extends BaseTestCase
         $params->add(new \StdClass());
     }
 
+    public function testSearchDefaultExpression()
+    {
+        $data = $this->getExampleValues();
+        $params = new Parameters($data);
+        $result = $params->search();
+        $this->assertEquals($data['str'], $result[0]);
+    }
+
+    public function testSearchSimple()
+    {
+        $params = new Parameters($this->getExampleValues());
+        $this->assertEquals('some string', $params->search('str'));
+        $this->assertEquals('some nested string', $params->search('nested.str'));
+        $this->assertEquals('second level', $params->search('nested."2nd level"'));
+    }
+
+    public function testSearchWildcardExpressions()
+    {
+        $data = $this->getExampleValues();
+        $nested_count = count($data['nested']);
+        $params = new Parameters($data);
+        $this->assertEquals(
+            array(
+               'some nested string',
+               'other nested string'
+            ),
+            $params->search('*.str')
+        );
+
+        $result = $params->search('nested.*');
+        $this->assertTrue(is_array($result));
+        $this->assertCount($nested_count, $result);
+        $this->assertEquals('some nested string', $result[0]);
+        $this->assertContains('second level', $result);
+    }
+
+    public function testSearchMultiSelectListExpression()
+    {
+        $data = $this->getExampleValues();
+        $params = new Parameters($data);
+
+        $result = $params->search('[str, nested.str]');
+        $this->assertTrue(is_array($result));
+        $this->assertCount(2, $result);
+        $this->assertEquals('some string', $result[0]);
+        $this->assertEquals('some nested string', $result[1]);
+    }
+
+    public function testSearchOrExpression()
+    {
+        $params = new Parameters($this->getExampleValues());
+        $this->assertEquals('second level', $params->search('nested."2nd level" || first_level'));
+        $this->assertEquals('first level', $params->search('first_level || nested."2nd level"'));
+    }
+
+    /**
+     * @expectedException \JmesPath\SyntaxErrorException
+     */
+    public function testSearchSyntaxErrorException()
+    {
+        $data = $this->getExampleValues();
+        $params = new Parameters($data);
+
+        $result = $params->search('[str, nested.str'); // missing closing ]
+    }
+
     protected function getExampleValues()
     {
         return array(
             'str' => 'some string',
             'int' => mt_rand(0, 999),
             'bool' => (mt_rand(1, 100) <= 50) ? true : false,
+            'first_level' => 'first level',
             'nested' => array(
                 'str' => 'some nested string',
                 'int' => mt_rand(10000, 19999),
                 'bool' => (mt_rand(1, 100) <= 50) ? true : false,
+                '2nd level' => 'second level',
+            ),
+            'more' => array(
+                'str' => 'other nested string'
             )
         );
     }

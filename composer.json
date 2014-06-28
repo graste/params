@@ -1,14 +1,14 @@
 {
     "name": "graste/params",
     "type": "library",
-    "description": "Simple array wrapper to ease handling of parameters or options.",
-    "keywords": ["parameters", "options"],
+    "description": "Eases array handling. Retrieve nested values, search via expressions or get with default values.",
+    "keywords": ["parameters", "options", "array"],
     "homepage": "https://github.com/graste/params",
     "license": "CC-BY-SA-3.0",
     "authors": [
         {
             "name": "Steffen Gransow",
-            "email": "graste@mivesto.de",
+            "email": "params@mivesto.de",
             "homepage": "http://mivesto.de",
             "role": "Developer"
         }
@@ -16,7 +16,6 @@
     "support": {
         "email": "params@mivesto.de",
         "issues": "https://github.com/graste/params/issues",
-        "wiki": "https://github.com/graste/params/wiki",
         "irc": "irc://irc.freenode.org/environaut",
         "source": "https://github.com/graste/params"
     },

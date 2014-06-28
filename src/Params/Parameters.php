@@ -2,6 +2,7 @@
 
 namespace Params;
 
+use JmesPath\Env as JmesPath;
 use InvalidArgumentException;
 use ArrayAccess;
 
@@ -50,11 +51,17 @@ class Parameters implements ArrayAccess
      * @param string $key name of entry
      * @param mixed $value value to set for the given key
      *
-     * @return mixed the value set
+     * @return Parameters self instance for fluent API
      */
     public function set($key, $value)
     {
-        return $this->parameters[$key] = $value;
+        if (empty($key)) {
+            throw new InvalidArgumentException('Invalid key given.');
+        }
+
+        $this->parameters[$key] = $value;
+
+        return $this;
     }
 
     /**
@@ -171,6 +178,33 @@ class Parameters implements ArrayAccess
     }
 
     /**
+     * Allows to search for specific parameters via JMESPath expressions.
+     *
+     * Some example expressions as a quick start:
+     *
+     * - "nested.key"           returns the value of the nested "key"
+     * - "nested.*"             returns all values available under the "nested" key
+     * - "*.key"                returns all values of "key"s on any second level array
+     * - "[key, nested.key]"    returns first level "key" value and the first value of the "nested" key array
+     * - "[key, nested[0]"      returns first level "key" value and the first value of the "nested" key array
+     * - "nested.key || key"    returns the value of the first matching expression
+     *
+     * @see http://jmespath.readthedocs.org/en/latest/ and https://github.com/mtdowling/jmespath.php
+     *
+     * @param string $expression JMESPath expression to evaluate on parameters
+     *
+     * @return mixed|null data in various types (scalar, array etc.) depending on the found results
+     *
+     * @throws \JmesPath\SyntaxErrorException on invalid expression syntax
+     * @throws \RuntimeException e.g. if JMESPath cache directory cannot be written
+     * @throws \InvalidArgumentException e.g. if JMESPath builtin functions can't be called
+     */
+    public function search($expression = '*')
+    {
+        return JmesPath::search($expression, $this->parameters);
+    }
+
+    /**
      * Returns the data as an associative array.
      *
      * @return array with all data
@@ -186,11 +220,5 @@ class Parameters implements ArrayAccess
     public function clear()
     {
         $this->parameters = array();
-    }
-
-    public function search($path)
-    {
-        $result = '';
-        return $result;
     }
 }
