@@ -1,8 +1,6 @@
 tools:
     php_changetracking:
         enabled: true
-    php_code_coverage:
-        enabled: true
     php_sim:
         enabled: true
     php_code_sniffer:
@@ -10,7 +8,7 @@ tools:
         config:
             standard: "PSR2"
     php_cpd:
-        enabled: true
+        enabled: false # php_sim is used instead (scrutinizer can't run both php_sim and php_cpd
     php_cs_fixer:
         enabled: false
     php_mess_detector:
@@ -19,5 +17,7 @@ tools:
         enabled: true
     php_analyzer:
         enabled: true
-#    external_code_coverage:
-#        timeout: 600
+    php_code_coverage:
+        enabled: false
+    external_code_coverage:
+        timeout: 600
