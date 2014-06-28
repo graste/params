@@ -78,7 +78,7 @@ folders:
 docs:
 
 	@make folders
-	@$(PHP) ./vendor/bin/sami.php update ./sami.cfg --force
+	@$(PHP) ./vendor/bin/sami.php update ./sami.php
 
 
 .PHONY: tests docs help composer install update code-sniffer code-sniffer-cli folders scrutinizer
