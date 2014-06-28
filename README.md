@@ -11,9 +11,13 @@
 
 ## Purpose
 
-Simple wrapper around arrays to ease the handling of parameters or options. It
-eases getting values with default values when keys don't exists and allows you
-to retrieve nested or multiple values at once via search expressions.
+Array wrapper object that eases the retrieval of values. It provides a `get`
+method that can return a default value if the given key is missing. In addition
+to the usage as a normal array and the various `get`, `set`, `has` etc. methods
+Parameters defines a `search($expression)` method that allows the retrieval of
+values by providing more or less complex expressions. You can easily retrieve
+values from nested arrays or get several values from different nesting levels
+with one call.
 
 ## Requirements and installation
 
@@ -99,7 +103,8 @@ To develop on this repository clone your fork and use the `Makefile` targets:
 - `make tests` runs the phpunit tests
 - `make code-sniffer` runs the code sniffer
 
-The code trys to adhere to the following PHP-FIG standards: [PSR-0][6], [PSR-1][7], [PSR-2][8]
+The code trys to adhere to the following PHP-FIG standards: [PSR-0][6],
+[PSR-1][7] and [PSR-2][8]
 
 ## Changelog
 
