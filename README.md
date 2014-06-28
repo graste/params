@@ -33,7 +33,7 @@ of your project works as well:
 
 Alternatively, you can download a release archive from the [github releases](releases).
 
-## Documentation
+## Documentation and usage
 
 ```php
 $data = array(
@@ -85,11 +85,17 @@ The expression syntax used is provided by Michael Dowling's [JMESPath](https://g
 None, but you may join the `#environaut` freenode IRC channel anytime
 ([`irc://irc.freenode.org/environaut`](irc://irc.freenode.org/environaut)) :-)
 
-## Contributors
+## Contribution
 
 Please contribute by [forking](http://help.github.com/forking/) and sending a
 [pull request](http://help.github.com/pull-requests/). More information can be
 found in the [`CONTRIBUTING.md`](CONTRIBUTING.md) file.
+
+To develop on this repository clone your fork and use the `Makefile` targets:
+
+- `make install` installs composer and all necessary vendor libraries
+- `make tests` runs the phpunit tests
+- `make code-sniffer` runs the code sniffer
 
 ## Changelog
 
