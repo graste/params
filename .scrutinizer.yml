@@ -1,3 +1,6 @@
+filter:
+    paths: [src/*]
+    excluded_paths: [vendor/*, build/*, docs/*]
 tools:
     php_changetracking:
         enabled: true
