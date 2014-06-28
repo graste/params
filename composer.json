@@ -21,14 +21,12 @@
         "source": "https://github.com/graste/params"
     },
     "prefer-stable": true,
-    "config": {
-        "vendor-dir": "vendor"
-    },
     "require": {
-        "php": ">=5.3.3"
+        "php": ">=5.4.0",
+        "mtdowling/jmespath.php": "~1.0.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "~3.7.22",
+        "phpunit/phpunit": "~4.0",
         "squizlabs/php_codesniffer": "~1.4.5"
     },
     "autoload": {

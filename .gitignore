@@ -5,7 +5,7 @@
 # composer related stuff
 /vendor/
 /composer.lock
-/bin/composer.phar
+/composer.phar
 
 # general os and editors related stuff
 .DS_Store
