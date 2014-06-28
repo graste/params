@@ -1,10 +1,13 @@
 # Params
 
-| Latest Version | Build Status | Coverage | Dependencies | Quality | PHP-FIG |
-| -------------- | ------------ | -------- | ------------ | ------- | ------- |
-| [![Latest Stable Version](https://poser.pugx.org/graste/params/version.png)](https://packagist.org/packages/graste/params) | [![Build Status](https://secure.travis-ci.org/graste/params.png)](http://travis-ci.org/graste/params) | [![Coverage Status](https://coveralls.io/repos/graste/params/badge.png)](https://coveralls.io/r/graste/params) | [![Dependency Status](https://www.versioneye.com/user/projects/53aefa3b404aa6df8c000082/badge.svg?style=flat)](https://www.versioneye.com/user/projects/53aefa3b404aa6df8c000082) | [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/graste/params/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/graste/params/?branch=master) | [PSR-1](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md), [PSR-1](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-1-basic-coding-standard.md), [PSR-2](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md) |
-
-Please have a look at the [available releases](https://github.com/graste/params/releases).
+[![Latest-Stable-Version](https://poser.pugx.org/graste/params/version.png)][1]
+[![License](https://poser.pugx.org/graste/params/license.svg)][1]
+[![Latest Unstable Version](https://poser.pugx.org/graste/params/v/unstable.svg)][1]
+[![Build Status](https://secure.travis-ci.org/graste/params.png)][2]
+[![Coverage Status](https://coveralls.io/repos/graste/params/badge.png)][3]
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/graste/params/badges/quality-score.png?b=master)][5]
+[![Dependency Status](https://www.versioneye.com/user/projects/53aefa3b404aa6df8c000082/badge.svg)][4]
+[![Total Composer Downloads](https://poser.pugx.org/graste/params/d/total.png)][1]
 
 ## Purpose
 
@@ -16,7 +19,7 @@ to retrieve nested or multiple values at once via search expressions.
 
 - PHP v5.4+
 
-Install the library via [Composer](https://getcomposer.org/):
+Install the library via [Composer][10]:
 
 ```./composer.phar require graste/params [optional version]```
 
@@ -31,7 +34,7 @@ of your project works as well:
 }
 ```
 
-Alternatively, you can download a release archive from the [github releases](releases).
+Alternatively, you can download a release archive from the [releases][9].
 
 ## Documentation and usage
 
@@ -78,7 +81,7 @@ $params["nested"]   // gives the array under the "nested" key
 $params[1]          // gives "first level"
 ```
 
-The expression syntax used is provided by Michael Dowling's [JMESPath](https://github.com/mtdowling/jmespath.php).
+The expression syntax used is provided by Michael Dowling's [JMESPath][11].
 
 ## Community
 
@@ -87,9 +90,8 @@ None, but you may join the `#environaut` freenode IRC channel anytime
 
 ## Contribution
 
-Please contribute by [forking](http://help.github.com/forking/) and sending a
-[pull request](http://help.github.com/pull-requests/). More information can be
-found in the [`CONTRIBUTING.md`](CONTRIBUTING.md) file.
+Please contribute by [forking][12] and sending a [pull request][13]. More
+information can be found in the [`CONTRIBUTING.md`](CONTRIBUTING.md) file.
 
 To develop on this repository clone your fork and use the `Makefile` targets:
 
@@ -97,8 +99,23 @@ To develop on this repository clone your fork and use the `Makefile` targets:
 - `make tests` runs the phpunit tests
 - `make code-sniffer` runs the code sniffer
 
+The code trys to adhere to the following PHP-FIG standards: [PSR-0][6], [PSR-1][7], [PSR-2][8]
+
 ## Changelog
 
 See [`CHANGELOG.md`](CHANGELOG.md) for more information about changes.
 
-* Total Composer Downloads: [![Composer Downloads](https://poser.pugx.org/graste/params/d/total.png)](https://packagist.org/packages/graste/params)
+
+[1]: https://packagist.org/packages/graste/params "graste/params on packagist"
+[2]: http://travis-ci.org/graste/params "graste/params on travis-ci"
+[3]: https://coveralls.io/r/graste/params "graste/params on coveralls"
+[4]: https://www.versioneye.com/user/projects/53aefa3b404aa6df8c000082 "graste/params on versioneye"
+[5]: https://scrutinizer-ci.com/g/graste/params/?branch=master "graste/params on scrutinizer-ci"
+[6]: http://www.php-fig.org/psr/psr-0/ "PSR-0 Autoloading Standard"
+[7]: http://www.php-fig.org/psr/psr-1/ "PSR-1 Basic Coding Standard"
+[8]: http://www.php-fig.org/psr/psr-2/ "PSR-2 Coding Style Guide"
+[9]: https://github.com/graste/params/releases "graste/params releases on github"
+[10]: https://getcomposer.org/ "Composer homepage with further documentation"
+[11]: https://github.com/mtdowling/jmespath.php "JMESPath on github"
+[12]: http://help.github.com/forking/ "Github docs on forking a project"
+[13]: http://help.github.com/pull-requests/ "Github docs on pull requests"
