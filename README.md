@@ -1,21 +1,23 @@
 # Params
 
-* Latest Version: [![Latest Stable
-  Version](https://poser.pugx.org/graste/params/version.png)](https://packagist.org/packages/graste/params)
-* Build: [![Build
-  Status](https://secure.travis-ci.org/graste/params.png)](http://travis-ci.org/graste/params)
+* Latest Version: [![Latest Stable Version](https://poser.pugx.org/graste/params/version.png)](https://packagist.org/packages/graste/params)
+* Build: [![Build Status](https://secure.travis-ci.org/graste/params.png)](http://travis-ci.org/graste/params)
+* Coverage: [![Coverage Status](https://coveralls.io/repos/graste/params/badge.png)](https://coveralls.io/r/graste/params)
+* Code: [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/graste/params/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/graste/params/?branch=master)
 
 Please have a look at the [available releases](https://github.com/graste/params/releases).
 
 ## Purpose
 
-Simple wrapper around arrays to ease the handling of parameters or options.
+Simple wrapper around arrays to ease the handling of parameters or options. It
+eases getting values with default values when keys don't exists and allows you
+to retrieve nested or multiple values at once via search expressions.
 
 ## Requirements and installation
 
-- PHP v5.3+
+- PHP v5.4+
 
-Install the library via [Composer](http://getcomposer.org/):
+Install the library via [Composer](https://getcomposer.org/):
 
 ```./composer.phar require graste/params [optional version]```
 

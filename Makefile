@@ -66,6 +66,7 @@ folders:
 
 #	@if [ -d ./docs/api ]; then rm -rf ./docs/api; fi
 	@if [ ! -d ./build/reports ]; then mkdir -p ./build/reports; fi
+	@if [ ! -d ./build/logs ]; then mkdir -p ./build/logs; fi
 
 
 #docs:

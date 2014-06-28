@@ -11,6 +11,9 @@ script:
   - "make tests"
   - "make code-sniffer-cli"
 
+after_script:
+  - "php vendor/bin/coveralls -v"
+
 notifications:
   irc:
     channels:
