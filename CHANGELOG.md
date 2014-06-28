@@ -2,6 +2,11 @@
 
 All new features, changes and fixes should be listed here. Please use tickets to reference changes.
 
+## 0.2.0 (2014/06/29)
+
+* [add] Markdown [API docs](docs/api/) via `sami` and a `sami-github` theme
+* [add] Scrutinizer configuration for continuous integration improvements
+
 ## 0.1.0 (2014/06/28)
 
 * [add] ```search($expression)``` method to get multiple values at once or retrieve nested values via [JMESPath expressions](http://jmespath.readthedocs.org/en/latest/index.html) (#2)

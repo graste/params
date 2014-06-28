@@ -33,7 +33,7 @@ of your project works as well:
 ```json
 {
     "require": {
-        "graste/params": "~0.1"
+        "graste/params": "~0.2"
     }
 }
 ```
