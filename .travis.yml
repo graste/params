@@ -13,6 +13,7 @@ script:
 
 after_script:
   - "php vendor/bin/coveralls -v"
+  - "make scrutinizer"
 
 notifications:
   irc:

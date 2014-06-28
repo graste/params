@@ -62,19 +62,25 @@ code-sniffer-cli:
 	@$(PHP) ./vendor/bin/phpcs -p --report=full --standard=psr2 ./src
 
 
+scrutinizer:
+
+	@make tests
+	@wget https://scrutinizer-ci.com/ocular.phar
+	@$(PHP) ocular.phar code-coverage:upload --format=php-clover ./build/logs/clover.xml
+
+
 folders:
 
-#	@if [ -d ./docs/api ]; then rm -rf ./docs/api; fi
-	@if [ ! -d ./build/reports ]; then mkdir -p ./build/reports; fi
-	@if [ ! -d ./build/logs ]; then mkdir -p ./build/logs; fi
+	@mkdir -p ./docs/api
+	@mkdir -p ./build/{reports,logs,cache}
 
 
-#docs:
-#
-#	@make folders
-#	@$(PHP) ./vendor/bin/sami.php update ./sami.cfg
+docs:
+
+	@make folders
+	@$(PHP) ./vendor/bin/sami.php update ./sami.cfg --force
 
 
-.PHONY: tests docs help composer install update code-sniffer code-sniffer-cli folders
+.PHONY: tests docs help composer install update code-sniffer code-sniffer-cli folders scrutinizer
 
 # vim: ts=4:sw=4:noexpandtab:

@@ -7,6 +7,9 @@
 /composer.lock
 /composer.phar
 
+# scrutinizer code coverage report
+/ocular.phar
+
 # general os and editors related stuff
 .DS_Store
 Thumbs.db
