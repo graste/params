@@ -1,6 +1,6 @@
 # Params
 
-[![Latest-Stable-Version](https://poser.pugx.org/graste/params/version.png)][1]
+[![Latest-Stable-Version](https://poser.pugx.org/graste/params/v/stable.svg)][1]
 [![License](https://poser.pugx.org/graste/params/license.svg)][14]
 [![Latest Unstable Version](https://poser.pugx.org/graste/params/v/unstable.svg)][1]
 [![Build Status](https://secure.travis-ci.org/graste/params.png)][2]
