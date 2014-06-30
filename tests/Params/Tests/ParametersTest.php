@@ -69,6 +69,24 @@ class ParametersTest extends BaseTestCase
         $this->assertEquals(null, $params->get('nil', 'default'));
     }
 
+    public function testSet()
+    {
+        $params = new Parameters();
+        $params['foo'] = 'bar';
+        $params->blah = 'blub';
+        $this->assertEquals('bar', $params->foo);
+        $this->assertEquals('blub', $params['blah']);
+    }
+/*
+    public function testAutoCreateSet()
+    {
+        $params = new Parameters();
+        //$params->meh->omg = 'yes';
+        $params['one']['two'] = 'three';
+        //$this->assertEquals('yes', $params->get('meh')->get('omg'));
+        $this->assertEquals('three', $params->one->two);
+    }
+ */
     /**
      * @expectedException \InvalidArgumentException
      */
@@ -288,10 +306,10 @@ class ParametersTest extends BaseTestCase
     public function testKsort()
     {
         $params = new Parameters($this->getExampleValues());
-        $keys = $params->getKeys();
+        $keys = $params->keys();
         $params->ksort();
-        $keys_new = $params->getKeys();
-        ksort($keys);
+        $keys_new = $params->keys();
+        sort($keys);
         $this->assertEquals($keys, $keys_new);
     }
 
@@ -300,6 +318,58 @@ class ParametersTest extends BaseTestCase
         $params = new Parameters($this->getExampleValues());
         $iter = $params->getIterator();
         $this->assertTrue($iter instanceof \ArrayIterator);
+    }
+
+    public function testGetArrayCopy()
+    {
+        $params = new Parameters($this->getExampleValues());
+        $array = $params->getArrayCopy();
+        $this->assertTrue(is_array($array));
+        $this->assertTrue(is_array($array['nested']));
+    }
+
+    public function testDeepClone()
+    {
+        $params = new Parameters($this->getExampleValues());
+        $clone = clone $params;
+        $this->assertTrue($params == $clone);
+        $this->assertFalse($params === $clone);
+        $clone->nested->str = 'asdf';
+        $this->assertNotEquals($params->nested->str, $clone->nested->str);
+        $this->assertFalse($params == $clone);
+        $this->assertFalse($params === $clone);
+    }
+
+    public function testArrayModificationByReference()
+    {
+        $params = new Parameters($this->getExampleValues());
+        $nested = $params->get('nested');
+        $nested->set('by', 'reference');
+        $this->assertEquals('reference', $params->get('nested')->get('by'));
+        $params['nested'] = array('str' => 'asdf');
+        $this->assertEquals($params->nested->str, $params->get('nested')['str']);
+    }
+
+    public function testToString()
+    {
+        $params = new Parameters(array('foo' => 'bar'));
+        $expected = <<<EOT
+array (
+  'foo' => 'bar',
+)
+EOT;
+        $this->assertEquals($expected, (string)$params);
+    }
+
+    public function testAppendNumericIndizes()
+    {
+        $params = new Parameters($this->getExampleValues());
+        $params->append('by');
+        $params->set(1, 'ref');
+        $params[] = 'srsly';
+        $this->assertEquals('ref', $params->get(1));
+        $this->assertEquals('srsly', $params[2]);
+        $this->assertEquals('by', $params->search('[0]'));
     }
 
     protected function getExampleValues()

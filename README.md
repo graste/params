@@ -66,7 +66,7 @@ $params->get("non-existant", "default value")   // gives "default value" as give
 $params->set("foo", "bar")                      // sets key "foo" to value "bar"
 $params->add(array|Parameters)                  // add array or other Parameters to current instance
 $params->has("foo")                             // returns true now
-$params->getKeys() or $params->keys()           // returns all first level keys
+$params->getKeys()                              // returns all first level keys
 $params->toArray()                              // returns internal array
 $params->clear()                                // empty internal array
 

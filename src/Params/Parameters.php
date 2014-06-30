@@ -26,7 +26,14 @@ class Parameters extends ArrayObject
             $this->iterator_class = trim($iterator_class);
         }
 
-        parent::__construct($data, self::ARRAY_AS_PROPS, $this->iterator_class);
+        parent::__construct(array(), self::ARRAY_AS_PROPS, $this->iterator_class);
+
+        foreach ($data as $key => $value) {
+            if (isset($value) && is_array($value)) {
+                $value = new static($value);
+            }
+            $this->offsetSet($key, $value);
+        }
     }
 
     /**
@@ -56,8 +63,8 @@ class Parameters extends ArrayObject
      */
     public function set($key, $value)
     {
-        if (empty($key)) {
-            throw new InvalidArgumentException('Invalid key given.');
+        if (is_null($key) || '' === $key) {
+            throw new InvalidArgumentException('Invalid key given (null and empty string are not allowed).');
         }
 
         $this[$key] = $value;
@@ -90,19 +97,48 @@ class Parameters extends ArrayObject
 
         if ($this->offsetExists($key)) {
             $value = $this[$key];
-            unset($this[$key]);
+            $this->offsetUnset($key);
         }
 
         return $value;
     }
 
-    public function offsetSet($offset, $data)
+    /**
+     * Returns the value of the specified key.
+     *
+     * @param string $key name of key to get
+     *
+     * @return mixed|null value or null if non-existant key
+     */
+    public function offsetGet($key)
+    {
+        if (!$this->offsetExists($key)) {
+            return null;
+        }
+
+        return parent::offsetGet($key);
+    }
+
+    /**
+     * Sets the given data on the specified key.
+     *
+     * @param string $key name of key to set
+     * @param mixed $data data to set for the given key
+     *
+     * @return void
+     */
+    public function offsetSet($key, $data)
     {
         if (isset($data) && is_array($data)) {
             $data = new static($data);
         }
 
-        return parent::offsetSet($k, $v);
+        return parent::offsetSet($key, $data);
+    }
+
+    public function getArrayCopy()
+    {
+        return $this->toArray();
     }
 
     /**
@@ -112,7 +148,7 @@ class Parameters extends ArrayObject
      */
     public function keys()
     {
-        return array_keys($this);
+        return array_keys((array)$this);
     }
 
     /**
@@ -122,25 +158,29 @@ class Parameters extends ArrayObject
      */
     public function getKeys()
     {
-        return array_keys($this);
+        return array_keys((array)$this);
     }
 
     /**
      * Adds the given parameters to the current ones.
      *
-     * @param array $data array of key-value pairs
+     * @param array $data array of key-value pairs or ArrayAccess implementing object
      *
      * @return Parameters self instance for fluent API
      */
     public function add($data = array())
     {
-        if (isset($data) && $data instanceof ArrayAccess) {
+        if (empty($data)) {
+            throw new InvalidArgumentException('Given data is empty.');
+        }
+
+        if (is_array($data) || $data instanceof ArrayAccess) {
             foreach ($data as $key => $value) {
-                $this->set($key, $value);
+                $this[$key] = $value;
             }
         } else {
             throw new InvalidArgumentException(
-                'Given parameters must be of type array or implement ArrayAccess. ' . gettype($data) . ' given.'
+                'Given data must be of type array or implement ArrayAccess. ' . gettype($data) . ' given.'
             );
         }
 
@@ -177,14 +217,16 @@ class Parameters extends ArrayObject
     /**
      * Returns the data as an associative array.
      *
+     * @param bool $recursive whether or not nested arrays should be included as array or object
+     *
      * @return array with all data
      */
-    public function toArray()
+    public function toArray($recursive = true)
     {
         $data = array();
 
         foreach ($this as $key => $value) {
-            if (is_object($value) && is_callable(array($value, 'toArray'))) {
+            if (is_object($value) && $recursive && is_callable(array($value, 'toArray'))) {
                 $data[$key] = $value->toArray();
             } else {
                 $data[$key] = $value;
@@ -199,8 +241,42 @@ class Parameters extends ArrayObject
      */
     public function clear()
     {
-        foreach($this as $entry) {
-            unset($entry);
+        $this->exchangeArray(array());
+    }
+/*
+    public function __set($key, $value)
+    {
+var_dump(__METHOD__, $key);
+        if (is_array($value)) {
+            $this->offsetSet($key, new static($value));
+        } else {
+            $this->offsetSet($key, $value);
         }
+    }
+
+    public function __get($key)
+    {
+var_dump(__METHOD__, $key);
+        $this->get($key);
+    }
+ */
+    /**
+     * Enables deep clones.
+     */
+    public function __clone()
+    {
+        foreach ($this as $key => $value) {
+            if (is_object($value)) {
+                $this[$key] = clone $value;
+            }
+        }
+    }
+
+    /**
+     * @return simple representation of the internal array
+     */
+    public function __toString()
+    {
+        return (string) var_export($this->toArray(), true);
     }
 }

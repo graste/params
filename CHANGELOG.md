@@ -4,9 +4,13 @@ All new features, changes and fixes should be listed here. Please use tickets to
 
 ## 1.0.0 (2014/xx/xx)
 
+The `Parameters` class now extends `ArrayObject`. Instead of only implementing
+`ArrayAccess` it now implements `Serializable`, `Countable` and `IteratorAggregate`.
+
 * [add] BREAKING CHANGE! Nested arrays are now `Parameters` objects instead of
   arrays to support recursive getting and modification of values.
-* [add] 
+* [add] BREAKING CHANGE! `Parameters` now extends `ArrayObject`
+* [add] `getArrayCopy`, `__clone` and `toArray` work recursively (deep clone)
 
 ## 0.2.0 (2014/06/29)
 
