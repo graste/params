@@ -40,7 +40,7 @@ class Parameters extends ArrayObject
     public function get($key, $default = null)
     {
         if ($this->offsetExists($key)) {
-            return $this->offsetGet($key);
+            return $this[$key];
         }
 
         return $default;
@@ -60,11 +60,7 @@ class Parameters extends ArrayObject
             throw new InvalidArgumentException('Invalid key given.');
         }
 
-        if (isset($value) && is_array($value)) {
-            $this->offsetSet($key, new static($value));
-        } else {
-            $this->offsetSet($key, $value);
-        }
+        $this[$key] = $value;
 
         return $this;
     }
@@ -93,7 +89,7 @@ class Parameters extends ArrayObject
         $value = null;
 
         if ($this->offsetExists($key)) {
-            $value = $this->offsetGet($key);
+            $value = $this[$key];
             unset($this[$key]);
         }
 
@@ -102,15 +98,11 @@ class Parameters extends ArrayObject
 
     public function offsetSet($offset, $data)
     {
-        if (is_array($data)) {
+        if (isset($data) && is_array($data)) {
             $data = new static($data);
         }
 
-        if ($offset === null) {
-            $this[] = $data;
-        } else {
-            $this[$offset] = $data;
-        }
+        return parent::offsetSet($k, $v);
     }
 
     /**
@@ -136,23 +128,19 @@ class Parameters extends ArrayObject
     /**
      * Adds the given parameters to the current ones.
      *
-     * @param array|Parameters $parameters array of key-value pairs or other Parameters instance
+     * @param array $data array of key-value pairs
      *
      * @return Parameters self instance for fluent API
      */
-    public function add($parameters = array())
+    public function add($data = array())
     {
-        if (is_array($parameters)) {
-            foreach ($parameters as $key => $value) {
-                $this->set($key, $value);
-            }
-        } elseif ($parameters instanceof ArrayAccess) {
-            foreach ($parameters as $key => $value) {
+        if (isset($data) && $data instanceof ArrayAccess) {
+            foreach ($data as $key => $value) {
                 $this->set($key, $value);
             }
         } else {
             throw new InvalidArgumentException(
-                'Given parameters must be of type array or implement ArrayAccess. ' . gettype($parameters) . ' given.'
+                'Given parameters must be of type array or implement ArrayAccess. ' . gettype($data) . ' given.'
             );
         }
 
@@ -194,6 +182,7 @@ class Parameters extends ArrayObject
     public function toArray()
     {
         $data = array();
+
         foreach ($this as $key => $value) {
             if (is_object($value) && is_callable(array($value, 'toArray'))) {
                 $data[$key] = $value->toArray();
@@ -201,6 +190,7 @@ class Parameters extends ArrayObject
                 $data[$key] = $value;
             }
         }
+
         return $data;
     }
 
