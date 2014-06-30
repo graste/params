@@ -144,13 +144,19 @@ class ParametersTest extends BaseTestCase
         $this->assertEquals(array('foo', 'key'), $params->getKeys());
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
-    public function testArrayAccessGetNonExistantThrowsException()
+    public function testArrayAccessGetNonExistantGivesNull()
     {
         $params = new Parameters();
-        $params['non-existant'];
+        $this->assertNull($params['non-existant']);
+    }
+
+    public function testRemove()
+    {
+        $params = new Parameters(array('foo' => 'bar'));
+        $foo = $params->remove('foo');
+        $this->assertFalse(isset($params['foo']));
+        $this->assertFalse($params->has('foo'));
+        $this->assertEquals('bar', $foo);
     }
 
     public function testAddArray()
@@ -179,6 +185,15 @@ class ParametersTest extends BaseTestCase
             ),
             $params->toArray()
         );
+    }
+
+    public function testTypeChangeAndAddOnDeeperLevel()
+    {
+        $params = new Parameters($this->getExampleValues());
+        $new = array('foo' => 'omg', 'blah' => 'blub');
+        $params->get('nested')->set('bool', $new)->add($new);
+        $this->assertEquals($new, $params->get('nested')->get('bool')->toArray());
+        $this->assertEquals($new, $params->search('nested.bool'));
     }
 
     /**
@@ -254,6 +269,37 @@ class ParametersTest extends BaseTestCase
         $params = new Parameters($data);
 
         $result = $params->search('[str, nested.str'); // missing closing ]
+    }
+
+    public function testRecursiveGet()
+    {
+        $params = new Parameters($this->getExampleValues());
+        $this->assertEquals('second level', $params->get('nested')->get("2nd level"));
+    }
+
+    public function testDeepArrayModification()
+    {
+        $params = new Parameters($this->getExampleValues());
+        $params->get('nested')->add(array('omg' => 'yes'));
+        $this->assertEquals('yes', $params->get('nested')->get('omg'));
+        $this->assertEquals('yes', $params->search('nested.omg'));
+    }
+
+    public function testKsort()
+    {
+        $params = new Parameters($this->getExampleValues());
+        $keys = $params->getKeys();
+        $params->ksort();
+        $keys_new = $params->getKeys();
+        ksort($keys);
+        $this->assertEquals($keys, $keys_new);
+    }
+
+    public function testIterator()
+    {
+        $params = new Parameters($this->getExampleValues());
+        $iter = $params->getIterator();
+        $this->assertTrue($iter instanceof \ArrayIterator);
     }
 
     protected function getExampleValues()

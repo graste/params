@@ -2,6 +2,12 @@
 
 All new features, changes and fixes should be listed here. Please use tickets to reference changes.
 
+## 1.0.0 (2014/xx/xx)
+
+* [add] BREAKING CHANGE! Nested arrays are now `Parameters` objects instead of
+  arrays to support recursive getting and modification of values.
+* [add] 
+
 ## 0.2.0 (2014/06/29)
 
 * [add] Markdown [API docs](docs/api/) via `sami` and a `sami-github` theme

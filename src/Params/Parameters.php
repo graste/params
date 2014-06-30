@@ -5,27 +5,28 @@ namespace Params;
 use JmesPath\Env as JmesPath;
 use InvalidArgumentException;
 use ArrayAccess;
+use ArrayObject;
 
 /**
  * Class that wraps an associative array for
  * more convenient access of keys and values.
  */
-class Parameters implements ArrayAccess
+class Parameters extends ArrayObject
 {
-    /**
-     * @var array
-     */
-    protected $parameters = array();
+    protected $iterator_class = 'ArrayIterator';
 
     /**
-     * Create a new instance with the given parameters as
-     * initial value set.
+     * Create a new instance with the given data as initial value set.
      *
-     * @param array $parameters
+     * @param array $data
      */
-    public function __construct(array $parameters = array())
+    public function __construct($data = array(), $iterator_class = 'ArrayIterator')
     {
-        $this->parameters = $parameters;
+        if (!empty($iterator_class)) {
+            $this->iterator_class = trim($iterator_class);
+        }
+
+        parent::__construct($data, self::ARRAY_AS_PROPS, $this->iterator_class);
     }
 
     /**
@@ -38,8 +39,8 @@ class Parameters implements ArrayAccess
      */
     public function get($key, $default = null)
     {
-        if (isset($this->parameters[$key]) || array_key_exists($key, $this->parameters)) {
-            return $this->parameters[$key];
+        if ($this->offsetExists($key)) {
+            return $this->offsetGet($key);
         }
 
         return $default;
@@ -59,7 +60,11 @@ class Parameters implements ArrayAccess
             throw new InvalidArgumentException('Invalid key given.');
         }
 
-        $this->parameters[$key] = $value;
+        if (isset($value) && is_array($value)) {
+            $this->offsetSet($key, new static($value));
+        } else {
+            $this->offsetSet($key, $value);
+        }
 
         return $this;
     }
@@ -73,61 +78,38 @@ class Parameters implements ArrayAccess
      */
     public function has($key)
     {
-        if (isset($this->parameters[$key]) || array_key_exists($key, $this->parameters)) {
-            return true;
+        return $this->offsetExists($key);
+    }
+
+    /**
+     * Removes the given key from the internal array.
+     *
+     * @param string $key name of key to remove
+     *
+     * @return mixed|null value of the removed key
+     */
+    public function remove($key)
+    {
+        $value = null;
+
+        if ($this->offsetExists($key)) {
+            $value = $this->offsetGet($key);
+            unset($this[$key]);
         }
 
-        return false;
+        return $value;
     }
 
-    /**
-     * @param string $key name of key
-     * @param mixed $value value to set for key
-     */
-    public function offsetSet($key, $value)
+    public function offsetSet($offset, $data)
     {
-        $this->parameters[$key] = $value;
-    }
-
-    /**
-     * @param string $key name of key
-     *
-     * @return mixed value of that key
-     *
-     * @throws \InvalidArgumentException if key does not exist
-     */
-    public function offsetGet($key)
-    {
-        if (!$this->has($key)) {
-            throw new InvalidArgumentException(sprintf('Key "%s" is not defined.', $key));
+        if (is_array($data)) {
+            $data = new static($data);
         }
 
-        return $this->get($key);
-    }
-
-    /**
-     * Returns whether the key exists or not.
-     *
-     * @param string $key name of key to check
-     *
-     * @return bool true, if key exists; false otherwise
-     */
-    public function offsetExists($key)
-    {
-        return array_key_exists($key, $this->parameters);
-    }
-
-    /**
-     * Unsets the given key's value if it's set.
-     *
-     * @param string $key name of key to unset
-     *
-     * @return void
-     */
-    public function offsetUnset($key)
-    {
-        if (isset($this->parameters[$key])) {
-            unset($this->parameters[$key]);
+        if ($offset === null) {
+            $this[] = $data;
+        } else {
+            $this[$offset] = $data;
         }
     }
 
@@ -138,7 +120,7 @@ class Parameters implements ArrayAccess
      */
     public function keys()
     {
-        return array_keys($this->parameters);
+        return array_keys($this);
     }
 
     /**
@@ -148,7 +130,7 @@ class Parameters implements ArrayAccess
      */
     public function getKeys()
     {
-        return array_keys($this->parameters);
+        return array_keys($this);
     }
 
     /**
@@ -164,13 +146,13 @@ class Parameters implements ArrayAccess
             foreach ($parameters as $key => $value) {
                 $this->set($key, $value);
             }
-        } elseif ($parameters instanceof Parameters) {
-            foreach ($parameters->getKeys() as $key) {
-                $this->set($key, $parameters->get($key));
+        } elseif ($parameters instanceof ArrayAccess) {
+            foreach ($parameters as $key => $value) {
+                $this->set($key, $value);
             }
         } else {
             throw new InvalidArgumentException(
-                'Given parameters must be of type array or Params\Parameters. ' . gettype($parameters) . ' given.'
+                'Given parameters must be of type array or implement ArrayAccess. ' . gettype($parameters) . ' given.'
             );
         }
 
@@ -191,7 +173,7 @@ class Parameters implements ArrayAccess
      *
      * @see http://jmespath.readthedocs.org/en/latest/ and https://github.com/mtdowling/jmespath.php
      *
-     * @param string $expression JMESPath expression to evaluate on parameters
+     * @param string $expression JMESPath expression to evaluate on stored data
      *
      * @return mixed|null data in various types (scalar, array etc.) depending on the found results
      *
@@ -201,7 +183,7 @@ class Parameters implements ArrayAccess
      */
     public function search($expression = '*')
     {
-        return JmesPath::search($expression, $this->parameters);
+        return JmesPath::search($expression, $this->toArray());
     }
 
     /**
@@ -211,7 +193,15 @@ class Parameters implements ArrayAccess
      */
     public function toArray()
     {
-        return $this->parameters;
+        $data = array();
+        foreach ($this as $key => $value) {
+            if (is_object($value) && is_callable(array($value, 'toArray'))) {
+                $data[$key] = $value->toArray();
+            } else {
+                $data[$key] = $value;
+            }
+        }
+        return $data;
     }
 
     /**
@@ -219,6 +209,8 @@ class Parameters implements ArrayAccess
      */
     public function clear()
     {
-        $this->parameters = array();
+        foreach($this as $entry) {
+            unset($entry);
+        }
     }
 }
