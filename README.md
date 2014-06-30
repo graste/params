@@ -7,6 +7,7 @@
 [![Coverage Status](https://coveralls.io/repos/graste/params/badge.png)][3]
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/graste/params/badges/quality-score.png?b=master)][5]
 [![Dependency Status](https://www.versioneye.com/user/projects/53aefa3b404aa6df8c000082/badge.svg)][4]
+[![Stories in Ready](https://badge.waffle.io/graste/params.png?label=ready&title=Ready)](https://waffle.io/graste/params)
 [![Total Composer Downloads](https://poser.pugx.org/graste/params/d/total.png)][1]
 
 ## Purpose
@@ -125,3 +126,4 @@ See [`CHANGELOG.md`](CHANGELOG.md) for more information about changes.
 [12]: http://help.github.com/forking/ "Github docs on forking a project"
 [13]: http://help.github.com/pull-requests/ "Github docs on pull requests"
 [14]: LICENSE.md "license file with link to original full text of the license"
+[15]: https://waffle.io/graste/params "graste/params on waffle"
