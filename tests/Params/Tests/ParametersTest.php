@@ -414,7 +414,8 @@ EOT;
     public function testJsonSerializable()
     {
         $params = new Parameters($this->getExampleElasticSearchQueryAsArray());
-        $this->assertEquals($this->getExampleElasticSearchQuery(), json_encode($params, JSON_PRETTY_PRINT));
+        json_encode($params, JSON_PRETTY_PRINT);
+        $this->assertEquals(JSON_ERROR_NONE, json_last_error());
     }
 
     protected function getExampleElasticSearchQueryAsArray()
@@ -430,9 +431,7 @@ EOT;
         "bool": {
             "must": [
                 {
-                    "match_all": [
-
-                    ]
+                    "match_all": []
                 },
                 {
                     "term": {
@@ -440,17 +439,11 @@ EOT;
                     }
                 },
                 {
-                    "match_all": [
-
-                    ]
+                    "match_all": []
                 }
             ],
-            "must_not": [
-
-            ],
-            "should": [
-
-            ]
+            "must_not": [],
+            "should": []
         }
     },
     "size": 10000

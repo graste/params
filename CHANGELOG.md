@@ -2,6 +2,10 @@
 
 All new features, changes and fixes should be listed here. Please use tickets to reference changes.
 
+## 1.0.1 (2014/07/01)
+
+* [fix] JsonSerializable test failed on Travis-CI due to PHP inconsistencies.
+
 ## 1.0.0 (2014/07/01)
 
 The `Parameters` class now extends `ArrayObject`. That means, in addtion to
