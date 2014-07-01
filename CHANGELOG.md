@@ -6,8 +6,6 @@ All new features, changes and fixes should be listed here. Please use tickets to
 
 The `Parameters` class now extends `ArrayObject`. That means, in addtion to
 `ArrayAccess` it implements `Serializable`, `Countable` and `IteratorAggregate`.
-It can now be used via object property modification if wanted (like
-```$params->foo->bar = 'baz' ```)
 
 * [add] BREAKING CHANGE! `Parameters` now extends `ArrayObject` and gets all the
   methods that are coming with that change. See issue #7.
@@ -24,6 +22,7 @@ It can now be used via object property modification if wanted (like
   allows access to the internal options object. If you want to prevent that,
   change the visibility of the method to `protected` in the using class. See
   issue #8.
+* [add] `Parameters` now implements `JsonSerializable` as well.
 * [fix] The internal Makefile target `folders` was slightly broken.
 
 ## 0.2.0 (2014/06/29)

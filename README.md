@@ -58,13 +58,15 @@ $data = array(
 
 $params = new \Params\Parameters($data);
 
-// use it as an object:
+// use it as a recursive object:
 
 $params->get("str")                             // gives "some string"
 $params->get("nested")                          // gives array stored under "nested" key
+$params->get("nested")->get('str')              // gives "some nested string"
 $params->get("non-existant", "default value")   // gives "default value" as given key is non existant
 $params->set("foo", "bar")                      // sets key "foo" to value "bar"
-$params->add(array|Parameters)                  // add array or other Parameters to current instance
+$params->get("nested")->set("foo", "bar")       // sets key "foo" to value "bar" on the "nested" array
+$params->add(array|ArrayAccess)                 // add array or other ArrayAccess implementing object to current instance
 $params->has("foo")                             // returns true now
 $params->getKeys()                              // returns all first level keys
 $params->toArray()                              // returns internal array
@@ -93,6 +95,17 @@ $params->filter->bool = 'yes'   // sets $params['filter']['bool'] to value 'yes'
 ```
 
 The expression syntax used is provided by Michael Dowling's [JMESPath][11].
+There is an `OptionsTrait` available that wraps a `Parameters` object to enable
+classes using that trait to have configurable options.
+
+The syntax sugar `Parameters` gives you is not only nice to define configurable
+classes, but may e.g. be used to create or change ElasticSearch queries:
+
+```php
+$params->filter->bool->must[1]->term->live = false;
+$params->get('filter')->set('bool', …);
+$params->filter->bool->must[] = array();
+```
 
 ## Community
 

@@ -3,6 +3,7 @@
 namespace Params;
 
 use JmesPath\Env as JmesPath;
+use JsonSerializable;
 use InvalidArgumentException;
 use ArrayAccess;
 use ArrayObject;
@@ -11,7 +12,7 @@ use ArrayObject;
  * Class that wraps an associative array for
  * more convenient access of keys and values.
  */
-class Parameters extends ArrayObject
+class Parameters extends ArrayObject implements JsonSerializable
 {
     protected $iterator_class = 'ArrayIterator';
 
@@ -281,10 +282,18 @@ class Parameters extends ArrayObject
     }
 
     /**
+     * @return array data which can be serialized by json_encode
+     */
+    public function jsonSerialize()
+    {
+        return $this->toArray();
+    }
+
+    /**
      * @return string representation of the internal array
      */
     public function __toString()
     {
-        return (string) var_export($this->toArray(), true);
+        return (string)var_export($this->toArray(), true);
     }
 }

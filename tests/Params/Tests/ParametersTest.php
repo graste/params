@@ -404,6 +404,60 @@ EOT;
         $this->assertEquals('by', $params->search('[0]'));
     }
 
+    public function testSampleElasticSearchUseCase()
+    {
+        $params = new Parameters($this->getExampleElasticSearchQueryAsArray());
+        $params->filter->bool->must[1]->term->live = false;
+        $this->assertFalse($params->filter->bool->must[1]->get('term')->live);
+    }
+
+    public function testJsonSerializable()
+    {
+        $params = new Parameters($this->getExampleElasticSearchQueryAsArray());
+        $this->assertEquals($this->getExampleElasticSearchQuery(), json_encode($params, JSON_PRETTY_PRINT));
+    }
+
+    protected function getExampleElasticSearchQueryAsArray()
+    {
+        return json_decode($this->getExampleElasticSearchQuery(), true);
+    }
+
+    protected function getExampleElasticSearchQuery()
+    {
+        return <<<EOQ
+{
+    "filter": {
+        "bool": {
+            "must": [
+                {
+                    "match_all": [
+
+                    ]
+                },
+                {
+                    "term": {
+                        "live": true
+                    }
+                },
+                {
+                    "match_all": [
+
+                    ]
+                }
+            ],
+            "must_not": [
+
+            ],
+            "should": [
+
+            ]
+        }
+    },
+    "size": 10000
+}
+EOQ;
+    }
+
     protected function getExampleValues()
     {
         return array(
