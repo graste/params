@@ -77,6 +77,25 @@ class ParametersTest extends BaseTestCase
         $this->assertEquals('bar', $params->foo);
         $this->assertEquals('blub', $params['blah']);
     }
+
+    public function testSetDoesntReplace()
+    {
+        $params = new Parameters(array('foo' => 'bar'));
+        $params->set('foo', 'omg', false);
+        $this->assertEquals('bar', $params->foo);
+        $params->set('foo', 'omg', true);
+        $this->assertEquals('omg', $params->foo);
+    }
+
+    public function testAddDoesntReplace()
+    {
+        $params = new Parameters(array('foo' => 'bar'));
+        $params->add(array('foo' => 'omg'), false);
+        $this->assertEquals('bar', $params->foo);
+        $params->add(array('foo' => 'omg'), true);
+        $this->assertEquals('omg', $params->foo);
+    }
+
 /*
     public function testAutoCreateSet()
     {
@@ -301,6 +320,19 @@ class ParametersTest extends BaseTestCase
         $params->get('nested')->add(array('omg' => 'yes'));
         $this->assertEquals('yes', $params->get('nested')->get('omg'));
         $this->assertEquals('yes', $params->search('nested.omg'));
+    }
+
+    public function testEach()
+    {
+        $params = new Parameters($this->getExampleValues());
+        $random_int = function($key, $value) {
+            if ($key === 'int') {
+                return '3'; // chosen by fair dice roll
+            }
+            return $value;
+        };
+        $params->each($random_int);
+        $this->assertEquals('3', $params->int);
     }
 
     public function testKsort()

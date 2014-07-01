@@ -34,7 +34,7 @@ of your project works as well:
 ```json
 {
     "require": {
-        "graste/params": "~0.2"
+        "graste/params": "~1.0"
     }
 }
 ```
@@ -69,6 +69,7 @@ $params->has("foo")                             // returns true now
 $params->getKeys()                              // returns all first level keys
 $params->toArray()                              // returns internal array
 $params->clear()                                // empty internal array
+$params->each(function($key, $value) { … })     // modifies each value to the value returned by the callback
 
 // retrieve values using expressions
 
@@ -84,6 +85,11 @@ $params->search('first_level || nested."2nd level"')    // gives "first level" a
 $params["str"]      // gives "some string"
 $params["nested"]   // gives the array under the "nested" key
 $params[1]          // gives "first level"
+
+// use it as an object with properties
+
+$params->foo = 'bar'            // sets key 'foo' to value 'bar'
+$params->filter->bool = 'yes'   // sets $params['filter']['bool'] to value 'yes'
 ```
 
 The expression syntax used is provided by Michael Dowling's [JMESPath][11].

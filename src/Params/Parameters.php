@@ -58,13 +58,18 @@ class Parameters extends ArrayObject
      *
      * @param string $key name of entry
      * @param mixed $value value to set for the given key
+     * @param bool $replace whether or not to replace values of existing keys
      *
      * @return Parameters self instance for fluent API
      */
-    public function set($key, $value)
+    public function set($key, $value, $replace = true)
     {
         if (is_null($key) || '' === $key) {
             throw new InvalidArgumentException('Invalid key given (null and empty string are not allowed).');
+        }
+
+        if (!$replace && $this->offsetExists($key)) {
+            return;
         }
 
         $this[$key] = $value;
@@ -136,6 +141,9 @@ class Parameters extends ArrayObject
         return parent::offsetSet($key, $data);
     }
 
+    /**
+     * Creates a copy of the data as an array.
+     */
     public function getArrayCopy()
     {
         return $this->toArray();
@@ -165,23 +173,39 @@ class Parameters extends ArrayObject
      * Adds the given parameters to the current ones.
      *
      * @param array $data array of key-value pairs or ArrayAccess implementing object
+     * @param bool $replace whether or not to replace values of existing keys
      *
      * @return Parameters self instance for fluent API
      */
-    public function add($data = array())
+    public function add($data = array(), $replace = true)
     {
-        if (empty($data)) {
-            throw new InvalidArgumentException('Given data is empty.');
-        }
-
         if (is_array($data) || $data instanceof ArrayAccess) {
             foreach ($data as $key => $value) {
-                $this[$key] = $value;
+                $this->set($key, $value, $replace);
             }
         } else {
             throw new InvalidArgumentException(
                 'Given data must be of type array or implement ArrayAccess. ' . gettype($data) . ' given.'
             );
+        }
+
+        return $this;
+    }
+
+    /**
+     * Runs given callback for every key on the current level. The callback
+     * should accept key and value as parameters and return the new value.
+     *
+     * @param callback $callback callback to run for each entry of the current level
+     *
+     * @return Parameters self instance for fluent API
+     */
+    public function each($callback)
+    {
+        if (is_callable($callback)) {
+            foreach ($this as $key => $value) {
+                $this->set($key, $callback($key, $value));
+            }
         }
 
         return $this;
@@ -243,23 +267,7 @@ class Parameters extends ArrayObject
     {
         $this->exchangeArray(array());
     }
-/*
-    public function __set($key, $value)
-    {
-var_dump(__METHOD__, $key);
-        if (is_array($value)) {
-            $this->offsetSet($key, new static($value));
-        } else {
-            $this->offsetSet($key, $value);
-        }
-    }
 
-    public function __get($key)
-    {
-var_dump(__METHOD__, $key);
-        $this->get($key);
-    }
- */
     /**
      * Enables deep clones.
      */
@@ -273,7 +281,7 @@ var_dump(__METHOD__, $key);
     }
 
     /**
-     * @return simple representation of the internal array
+     * @return string representation of the internal array
      */
     public function __toString()
     {

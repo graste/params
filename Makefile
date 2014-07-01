@@ -11,7 +11,7 @@ help:
 	@echo ""
 	@echo "  install         - install composer and vendor libraries"
 	@echo "  update          - update composer and vendor libraries"
-#	@echo "  docs             - generate API documentation into 'docs/api' folder"
+	@echo "  docs            - generate API documentation into 'docs/api' folder"
 	@echo "  tests           - run all tests and create test coverage in 'build/reports"
 	@echo "  codesniffer     - create codesniffer report in 'build/reports' folder"
 	@echo "  codesniffer-cli - run codesniffer and display report in console"
@@ -72,7 +72,9 @@ scrutinizer:
 folders:
 
 	@mkdir -p ./docs/api
-	@mkdir -p ./build/{reports,logs,cache}
+	@mkdir -p ./build/reports
+	@mkdir -p ./build/logs
+	@mkdir -p ./build/cache
 
 
 docs:

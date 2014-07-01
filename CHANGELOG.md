@@ -4,13 +4,27 @@ All new features, changes and fixes should be listed here. Please use tickets to
 
 ## 1.0.0 (2014/xx/xx)
 
-The `Parameters` class now extends `ArrayObject`. Instead of only implementing
-`ArrayAccess` it now implements `Serializable`, `Countable` and `IteratorAggregate`.
+The `Parameters` class now extends `ArrayObject`. That means, in addtion to
+`ArrayAccess` it implements `Serializable`, `Countable` and `IteratorAggregate`.
+It can now be used via object property modification if wanted (like
+```$params->foo->bar = 'baz' ```)
 
+* [add] BREAKING CHANGE! `Parameters` now extends `ArrayObject` and gets all the
+  methods that are coming with that change. See issue #7.
 * [add] BREAKING CHANGE! Nested arrays are now `Parameters` objects instead of
-  arrays to support recursive getting and modification of values.
-* [add] BREAKING CHANGE! `Parameters` now extends `ArrayObject`
+  arrays to support recursive getting and modification of values. See issue #4.
 * [add] `getArrayCopy`, `__clone` and `toArray` work recursively (deep clone)
+* [add] ```each($callback)``` method that gets each key of the current level
+  with it's key and must return the new value to set for the key. See issue #5.
+* [add] ```$replace``` argument for `add()` and `set()` methods to be able to
+  prevent overwriting of values for already existing keys. See issue #3.
+* [add] `OptionsTrait` that can be mixed into existing classes to get an
+  internal options object with methods like `addOption`, `getOption` etc. Not
+  all methods of `Parameters` are proxied, but a `getOptions` method exists that
+  allows access to the internal options object. If you want to prevent that,
+  change the visibility of the method to `protected` in the using class. See
+  issue #8.
+* [fix] The internal Makefile target `folders` was slightly broken.
 
 ## 0.2.0 (2014/06/29)
 
