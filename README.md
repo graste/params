@@ -18,7 +18,7 @@ to the usage as a normal array and the various `get`, `set`, `has` etc. methods
 Parameters defines a `search($expression)` method that allows the retrieval of
 values by providing more or less complex expressions. You can easily retrieve
 values from nested arrays or get several values from different nesting levels
-with one call.
+with one call. There are traits for convenient creation of configurable classes.
 
 ## Requirements and installation
 
@@ -34,7 +34,7 @@ of your project works as well:
 ```json
 {
     "require": {
-        "graste/params": "~1.0"
+        "graste/params": "~1.1"
     }
 }
 ```
@@ -95,8 +95,12 @@ $params->filter->bool = 'yes'   // sets $params['filter']['bool'] to value 'yes'
 ```
 
 The expression syntax used is provided by Michael Dowling's [JMESPath][11].
-There is an `OptionsTrait` available that wraps a `Parameters` object to enable
-classes using that trait to have configurable options.
+
+There are two traits that wrap `Parameters` instances for your classes that
+need to be configurable:
+
+- `ParametersTrait` wraps `parameters`
+- `OptionsTrait` wraps `options`
 
 The syntax sugar `Parameters` gives you is not only nice to define configurable
 classes, but may e.g. be used to create or change ElasticSearch queries:

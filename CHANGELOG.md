@@ -2,6 +2,12 @@
 
 All new features, changes and fixes should be listed here. Please use tickets to reference changes.
 
+## 1.1.0 (2014/07/01)
+
+* [add] `ParametersTrait` that works like the `OptionsTrait`, but wraps
+  parameters instead of options and thus has `getParameter` etc. methods. See
+  issue #9.
+
 ## 1.0.1 (2014/07/01)
 
 * [fix] JsonSerializable test failed on Travis-CI due to PHP inconsistencies.
