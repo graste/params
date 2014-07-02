@@ -1,27 +1,28 @@
 <small>Params</small>
 
-OptionsTrait
-============
+OptionsInterface
+================
 
-Trait that contains an Options instance to use for nestable configuration options.
+Class that wraps an associative array for more convenient access of keys and values.
 
 Signature
 ---------
 
-- It is a(n) **class**.
+- It is a(n) **interface**.
+- It implements the [`ImmutableOptionsInterface`](../Params/Immutable/ImmutableOptionsInterface.md) interface.
 
 Methods
 -------
 
-The class defines the following methods:
+The interface defines the following methods:
 
-- [`setOption()`](#setOption) &mdash; Sets a given value for the specified key.
-- [`addOptions()`](#addOptions) &mdash; Adds the given data (key/value pairs) to the current data.
-- [`removeOption()`](#removeOption) &mdash; Removes the given key from the internal array.
-- [`clearOptions()`](#clearOptions) &mdash; Delete all internal data.
-- [`setOptions()`](#setOptions) &mdash; Set an object&#039;s options.
+- [`set()`](#set) &mdash; Sets a given value for the specified key.
+- [`add()`](#add) &mdash; Adds the given data (key/value pairs) to the current data.
+- [`remove()`](#remove) &mdash; Removes the given key from the internal array.
+- [`clear()`](#clear) &mdash; Deletes all internal data.
+- [`map()`](#map) &mdash; Runs given callback for every key on the current level.
 
-### `setOption()` <a name="setOption"></a>
+### `set()` <a name="set"></a>
 
 Sets a given value for the specified key.
 
@@ -37,7 +38,7 @@ Sets a given value for the specified key.
 - It throws one of the following exceptions:
     - [`InvalidArgumentException`](http://php.net/class.InvalidArgumentException) &mdash; on empty string or null key given
 
-### `addOptions()` <a name="addOptions"></a>
+### `add()` <a name="add"></a>
 
 Adds the given data (key/value pairs) to the current data.
 
@@ -49,10 +50,8 @@ Adds the given data (key/value pairs) to the current data.
     - `$replace` (`bool`) &mdash; whether or not to replace values of existing keys
 - _Returns:_ self instance for fluent API
     - [`Options`](../Params/Options.md)
-- It throws one of the following exceptions:
-    - [`InvalidArgumentException`](http://php.net/class.InvalidArgumentException) &mdash; on wrong data type given
 
-### `removeOption()` <a name="removeOption"></a>
+### `remove()` <a name="remove"></a>
 
 Removes the given key from the internal array.
 
@@ -64,9 +63,9 @@ Removes the given key from the internal array.
 - _Returns:_ self instance for fluent API
     - [`Options`](../Params/Options.md)
 
-### `clearOptions()` <a name="clearOptions"></a>
+### `clear()` <a name="clear"></a>
 
-Delete all internal data.
+Deletes all internal data.
 
 #### Signature
 
@@ -74,16 +73,20 @@ Delete all internal data.
 - _Returns:_ self instance for fluent API
     - [`Options`](../Params/Options.md)
 
-### `setOptions()` <a name="setOptions"></a>
+### `map()` <a name="map"></a>
 
-Set an object&#039;s options.
+Runs given callback for every key on the current level.
+
+#### Description
+
+The callback
+should accept key and value as parameters and return the new value.
 
 #### Signature
 
 - It is a **public** method.
 - It accepts the following parameter(s):
-    - `$options` (`mixed`) &mdash; Either array or ArrayAccess implementing object.
-- It does not return anything.
-- It throws one of the following exceptions:
-    - [`InvalidArgumentException`](http://php.net/class.InvalidArgumentException) &mdash; on wrong data type given
+    - `$callback` (`mixed`) &mdash; callback to run for each entry of the current level
+- _Returns:_ self instance for fluent API
+    - [`Options`](../Params/Options.md)
 

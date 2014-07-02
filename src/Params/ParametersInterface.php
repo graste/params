@@ -18,6 +18,8 @@ interface ParametersInterface extends ImmutableParametersInterface
      * @param bool $replace whether or not to replace values of existing keys
      *
      * @return Parameters self instance for fluent API
+     *
+     * @throws \InvalidArgumentException on empty string or null key given
      */
     public function set($key, $value, $replace = true);
 

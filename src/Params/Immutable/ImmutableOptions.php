@@ -2,7 +2,7 @@
 
 namespace Params\Immutable;
 
-use Params\Immutable\ImmutableParametersInterface;
+use Params\Immutable\ImmutableOptionsInterface;
 use JmesPath\Env as JmesPath;
 use JsonSerializable;
 use InvalidArgumentException;
@@ -11,10 +11,10 @@ use ArrayObject;
 use LogicException;
 
 /**
- * Class that gives recursive read-only access to parameters added via
+ * Class that gives recursive read-only access to options added via
  * constructor.
  */
-class ImmutableParameters extends ArrayObject implements JsonSerializable, ImmutableParametersInterface
+class ImmutableOptions extends ArrayObject implements JsonSerializable, ImmutableOptionsInterface
 {
     /**
      * @var string default iterator used

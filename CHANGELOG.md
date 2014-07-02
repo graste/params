@@ -2,6 +2,20 @@
 
 All new features, changes and fixes should be listed here. Please use tickets to reference changes.
 
+## 2.0.0 (2014/07/03)
+
+BREAKING CHANGES. You can now have `Parameters` or `Options` in a mutable or
+immutable variant depending on your needs. To use the functionality you can use
+traits or extend the base classes. Interfaces have been added as well.
+
+* [add] `ImmutableParameters`, `ImmutableParametersTrait`,
+  `ImmutableParametersInterface`
+* [add] `ImmutableOptions`, `ImmutableOptionsTrait`,
+  `ImmutableOptionsInterface`
+* [chg] multiple changes to method names (`map` instead of `each`, `getValues`
+  instead of `search` etc.)
+* [fix] some smaller API doc fixes for consistency
+
 ## 1.2.0 (2014/07/02)
 
 * [fix] Documentation of some methods was misleading. Return values for fluent

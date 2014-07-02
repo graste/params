@@ -15,8 +15,8 @@
 Array wrapper object that eases the retrieval of values. It provides a `get`
 method that can return a default value if the given key is missing. In addition
 to the usage as a normal array and the various `get`, `set`, `has` etc. methods
-Parameters defines a `search($expression)` method that allows the retrieval of
-values by providing more or less complex expressions. You can easily retrieve
+Parameters defines a `getValues($expression)` method that allows the retrieval
+of values by providing more or less complex expressions. You can easily retrieve
 values from nested arrays or get several values from different nesting levels
 with one call. There are traits for convenient creation of configurable classes.
 
@@ -34,7 +34,7 @@ of your project works as well:
 ```json
 {
     "require": {
-        "graste/params": "~1.2"
+        "graste/params": "~2.0"
     }
 }
 ```
@@ -56,61 +56,72 @@ $data = array(
     )
 );
 
+// create mutable parameters instance:
 $params = new \Params\Parameters($data);
+// or initialize an immutable instance that prevents further modifications after construction
+$params = new \Params\Immutable\ImmutableParameters($data);
+
+// do you like options instead of parameters in your classes?
+$params = new \Params\Options($data);
+$params = new \Params\Immutable\ImmutableOptions($data);
 
 // use it as a recursive object:
 
-$params->get("str")                             // gives "some string"
-$params->get("nested")                          // gives array stored under "nested" key
-$params->get("nested")->get('str')              // gives "some nested string"
-$params->get("non-existant", "default value")   // gives "default value" as given key is non existant
-$params->set("foo", "bar")                      // sets key "foo" to value "bar"
-$params->get("nested")->set("foo", "bar")       // sets key "foo" to value "bar" on the "nested" array
-$params->add(array|ArrayAccess)                 // add array or other ArrayAccess implementing object to current instance
-$params->has("foo")                             // returns true now
-$params->getKeys()                              // returns all first level keys
-$params->toArray()                              // returns internal array
-$params->clear()                                // empty internal array
-$params->each(function($key, $value) { … })     // modifies each value to the value returned by the callback
+$params->has("foo")                           // returns true now
+$params->get("str")                           // gives "some string"
+$params->get("nested")                        // gives array stored under "nested" key
+$params->get("nested")->get('str')            // gives "some nested string"
+$params->get("non-existant", "default value") // gives "default value" as given key is non existant
+$params->get("nested")->set("foo", "bar")     // sets key "foo" to value "bar" on the "nested" array
+$params->getKeys()                            // returns all first level keys
+$params->toArray()                            // returns internal array
+
+// or use the mutable methods
+$params->set("foo", "bar")                    // sets key "foo" to value "bar"
+$params->add(array|ArrayAccess)               // add array or other ArrayAccess implementing object to current instance
+$params->clear()                              // empty internal array
+$params->map(function($key, $value) { … })    // modifies each value to the value returned by the callback
 
 // retrieve values using expressions
 
-$params->search("foo")                                  // gives "bar"
-$params->search("nested.str")                           // gives "some nested string"
-$params->search('*.str')                                // gives array("some nested string", "other nested string")
-$params->search('[str, nested.str]')                    // gives array("some string", "some nested string")
-$params->search('nested."2nd level" || first_level')    // gives "second level" as that key exists; other expression not evaluated
-$params->search('first_level || nested."2nd level"')    // gives "first level" as that key exists; other expression not evaluated
+$params->getValues("foo")                               // gives "bar"
+$params->getValues("nested.str")                        // gives "some nested string"
+$params->getValues('*.str')                             // gives array("some nested string", "other nested string")
+$params->getValues('[str, nested.str]')                 // gives array("some string", "some nested string")
+$params->getValues('nested."2nd level" || first_level') // gives "second level" as that key exists; other expression not evaluated
+$params->getValues('first_level || nested."2nd level"') // gives "first level" as that key exists; other expression not evaluated
 
 // use it as an array:
 
-$params["str"]      // gives "some string"
-$params["nested"]   // gives the array under the "nested" key
-$params[1]          // gives "first level"
+$params["str"]    // gives "some string"
+$params["nested"] // gives the array under the "nested" key
+$params[1]        // gives "first level"
 
 // use it as an object with properties
 
-$params->foo = 'bar'            // sets key 'foo' to value 'bar'
-$params->filter->bool = 'yes'   // sets $params['filter']['bool'] to value 'yes'
+$params->foo = 'bar'          // sets key 'foo' to value 'bar'
+$params->filter->bool = 'yes' // sets $params['filter']['bool'] to value 'yes'
 ```
 
 The expression syntax used is provided by Michael Dowling's [JMESPath][11].
 
 ### Traits
 
-There are two traits that wrap `Parameters` instances for your classes that
-need to be configurable:
+There are two traits that wrap `Parameters` or `Options` instances for your
+classes that need to be configurable:
 
+- `ImmutableParametersTrait` wraps `parameters`
 - `ParametersTrait` wraps `parameters`
+- `ImmutableOptionsTrait` wraps `options`
 - `OptionsTrait` wraps `options`
 
-For fluent API support the methods `add`, `set`, `set(Options|Parameters)` and
-`clear(Options|Parameters)` return the class instance they're mixed into.
+For fluent API support the methods `add`, `set`, `remove` and `clear` return
+the class instance they're mixed into.
 
 ### ElasticSearch queries
 
 The syntax sugar `Parameters` gives you is not only nice to define configurable
-classes, but also ease the creation and modification of ElasticSearch queries:
+classes, but also eases the creation and modification of ElasticSearch queries:
 
 ```php
 $params->filter->bool->must[1]->term->live = false;

@@ -2,7 +2,8 @@
 
 namespace Params;
 
-use Params\Immutable\ImmutableParameters;
+use Params\Immutable\ImmutableOptions;
+use Params\OptionsInterface;
 use InvalidArgumentException;
 use ArrayAccess;
 
@@ -10,7 +11,7 @@ use ArrayAccess;
  * Class that wraps an associative array for
  * more convenient access of keys and values.
  */
-class Parameters extends ImmutableParameters implements ParametersInterface
+class Options extends ImmutableOptions implements OptionsInterface
 {
     /**
      * Create a new instance with the given data as initial value set.
@@ -32,7 +33,7 @@ class Parameters extends ImmutableParameters implements ParametersInterface
      * @param mixed $value value to set for the given key
      * @param bool $replace whether or not to replace values of existing keys
      *
-     * @return Parameters self instance for fluent API
+     * @return Options self instance for fluent API
      *
      * @throws \InvalidArgumentException on empty string or null key given
      */
@@ -57,7 +58,7 @@ class Parameters extends ImmutableParameters implements ParametersInterface
      * @param array $data associative array or ArrayAccess implementing object
      * @param bool $replace whether or not to replace values of existing keys
      *
-     * @return Parameters self instance for fluent API
+     * @return Options self instance for fluent API
      *
      * @throws \InvalidArgumentException on wrong data type given
      */
@@ -81,7 +82,7 @@ class Parameters extends ImmutableParameters implements ParametersInterface
      *
      * @param mixed $key name of key to remove
      *
-     * @return Parameters self instance for fluent API
+     * @return Options self instance for fluent API
      */
     public function remove($key)
     {
@@ -95,7 +96,7 @@ class Parameters extends ImmutableParameters implements ParametersInterface
     /**
      * Deletes all internal data.
      *
-     * @return Parameters self instance for fluent API
+     * @return Options self instance for fluent API
      */
     public function clear()
     {
@@ -110,7 +111,7 @@ class Parameters extends ImmutableParameters implements ParametersInterface
      *
      * @param mixed $callback callback to run for each entry of the current level
      *
-     * @return Parameters self instance for fluent API
+     * @return Options self instance for fluent API
      */
     public function map($callback)
     {

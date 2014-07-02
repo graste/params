@@ -1,27 +1,28 @@
 <small>Params</small>
 
-ParametersTrait
-===============
+ParametersInterface
+===================
 
-Trait that contains a Parameters instance to use for nestable configuration parameters.
+Class that wraps an associative array for more convenient access of keys and values.
 
 Signature
 ---------
 
-- It is a(n) **class**.
+- It is a(n) **interface**.
+- It implements the [`ImmutableParametersInterface`](../Params/Immutable/ImmutableParametersInterface.md) interface.
 
 Methods
 -------
 
-The class defines the following methods:
+The interface defines the following methods:
 
-- [`setParameter()`](#setParameter) &mdash; Sets a given value for the specified key.
-- [`addParameters()`](#addParameters) &mdash; Adds the given data (key/value pairs) to the current data.
-- [`removeParameter()`](#removeParameter) &mdash; Removes the given key from the internal array.
-- [`clearParameters()`](#clearParameters) &mdash; Delete all internal data.
-- [`setParameters()`](#setParameters) &mdash; Set an object&#039;s parameters.
+- [`set()`](#set) &mdash; Sets a given value for the specified key.
+- [`add()`](#add) &mdash; Adds the given data (key/value pairs) to the current data.
+- [`remove()`](#remove) &mdash; Removes the given key from the internal array.
+- [`clear()`](#clear) &mdash; Deletes all internal data.
+- [`map()`](#map) &mdash; Runs given callback for every key on the current level.
 
-### `setParameter()` <a name="setParameter"></a>
+### `set()` <a name="set"></a>
 
 Sets a given value for the specified key.
 
@@ -37,7 +38,7 @@ Sets a given value for the specified key.
 - It throws one of the following exceptions:
     - [`InvalidArgumentException`](http://php.net/class.InvalidArgumentException) &mdash; on empty string or null key given
 
-### `addParameters()` <a name="addParameters"></a>
+### `add()` <a name="add"></a>
 
 Adds the given data (key/value pairs) to the current data.
 
@@ -49,10 +50,8 @@ Adds the given data (key/value pairs) to the current data.
     - `$replace` (`bool`) &mdash; whether or not to replace values of existing keys
 - _Returns:_ self instance for fluent API
     - [`Parameters`](../Params/Parameters.md)
-- It throws one of the following exceptions:
-    - [`InvalidArgumentException`](http://php.net/class.InvalidArgumentException) &mdash; on wrong data type given
 
-### `removeParameter()` <a name="removeParameter"></a>
+### `remove()` <a name="remove"></a>
 
 Removes the given key from the internal array.
 
@@ -64,9 +63,9 @@ Removes the given key from the internal array.
 - _Returns:_ self instance for fluent API
     - [`Parameters`](../Params/Parameters.md)
 
-### `clearParameters()` <a name="clearParameters"></a>
+### `clear()` <a name="clear"></a>
 
-Delete all internal data.
+Deletes all internal data.
 
 #### Signature
 
@@ -74,16 +73,20 @@ Delete all internal data.
 - _Returns:_ self instance for fluent API
     - [`Parameters`](../Params/Parameters.md)
 
-### `setParameters()` <a name="setParameters"></a>
+### `map()` <a name="map"></a>
 
-Set an object&#039;s parameters.
+Runs given callback for every key on the current level.
+
+#### Description
+
+The callback
+should accept key and value as parameters and return the new value.
 
 #### Signature
 
 - It is a **public** method.
 - It accepts the following parameter(s):
-    - `$parameters` (`mixed`) &mdash; Either array or ArrayAccess implementing object.
-- It does not return anything.
-- It throws one of the following exceptions:
-    - [`InvalidArgumentException`](http://php.net/class.InvalidArgumentException) &mdash; on wrong data type given
+    - `$callback` (`mixed`) &mdash; callback to run for each entry of the current level
+- _Returns:_ self instance for fluent API
+    - [`Parameters`](../Params/Parameters.md)
 

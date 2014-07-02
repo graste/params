@@ -2,6 +2,7 @@
 
 namespace Params;
 
+use Params\Immutable\ImmutableParametersTrait;
 use Params\Parameters;
 use ArrayAccess;
 use InvalidArgumentException;
@@ -22,6 +23,8 @@ trait ParametersTrait
      * @param bool $replace whether or not to replace values of existing keys
      *
      * @return Parameters self instance for fluent API
+     *
+     * @throws \InvalidArgumentException on empty string or null key given
      */
     public function setParameter($key, $value, $replace = true)
     {
@@ -37,6 +40,8 @@ trait ParametersTrait
      * @param bool $replace whether or not to replace values of existing keys
      *
      * @return Parameters self instance for fluent API
+     *
+     * @throws \InvalidArgumentException on wrong data type given
      */
     public function addParameters($data = array(), $replace = true)
     {
@@ -75,6 +80,8 @@ trait ParametersTrait
      * Set an object's parameters.
      *
      * @param mixed $parameters Either array or ArrayAccess implementing object.
+     *
+     * @throws \InvalidArgumentException on wrong data type given
      */
     public function setParameters($parameters)
     {

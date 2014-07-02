@@ -1,17 +1,18 @@
 <?php
 
-namespace Params;
+namespace Params\Immutable;
 
 /**
- * Class that wraps an associative array for
- * more convenient access of keys and values.
+ * Marker interface for a class that wraps an associative array for
+ * more convenient access of keys and values while the actual values
+ * are not mutable via methods like set, add, remove etc.
  */
-interface SettingsInterface
+interface ImmutableOptionsInterface
 {
     /**
      * Returns whether the key exists or not.
      *
-     * @param string $key name of key to check
+     * @param mixed $key name of key to check
      *
      * @return bool true, if key exists; false otherwise
      */
@@ -20,59 +21,12 @@ interface SettingsInterface
     /**
      * Returns the value for the given key.
      *
-     * @param string $key name of key
+     * @param mixed $key name of key
      * @param mixed $default value to return if key doesn't exist
      *
      * @return mixed value for that key or default given
      */
     public function get($key, $default = null);
-
-    /**
-     * Sets a given value for the specified key.
-     *
-     * @param string $key name of entry
-     * @param mixed $value value to set for the given key
-     * @param bool $replace whether or not to replace values of existing keys
-     *
-     * @return Settings self instance for fluent API
-     */
-    public function set($key, $value, $replace = true);
-
-    /**
-     * Adds the given data (key/value pairs) to the current data.
-     *
-     * @param array $data associative array or ArrayAccess implementing object
-     * @param bool $replace whether or not to replace values of existing keys
-     *
-     * @return Settings self instance for fluent API
-     */
-    public function add($data = array(), $replace = true);
-
-    /**
-     * Removes the given key from the internal array.
-     *
-     * @param string $key name of key to remove
-     *
-     * @return Settings self instance for fluent API
-     */
-    public function remove($key);
-
-    /**
-     * Deletes all internal data.
-     *
-     * @return Settings self instance for fluent API
-     */
-    public function clear();
-
-    /**
-     * Runs given callback for every key on the current level. The callback
-     * should accept key and value as parameters and return the new value.
-     *
-     * @param callback $callback callback to run for each entry of the current level
-     *
-     * @return Settings self instance for fluent API
-     */
-    public function map($callback);
 
     /**
      * Returns all first level key names.

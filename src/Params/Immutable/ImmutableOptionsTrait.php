@@ -2,31 +2,31 @@
 
 namespace Params\Immutable;
 
-use Params\Immutable\ImmutableParameters;
+use Params\Immutable\ImmutableOptions;
 use ArrayAccess;
 use InvalidArgumentException;
 
 /**
- * Trait that contains an ImmutableParameters instance to use for nestable
- * configuration parameters.
+ * Trait that contains an ImmutableOptions instance to use for nestable
+ * configuration options.
  */
-trait ImmutableParametersTrait
+trait ImmutableOptionsTrait
 {
     /**
-     * @var ImmutableParameters
+     * @var ImmutableOptions
      */
-    protected $parameters;
+    protected $options;
 
     /**
-     * Returns whether the parameter exists or not.
+     * Returns whether the option exists or not.
      *
      * @param mixed $key key to check
      *
      * @return bool true, if key exists; false otherwise
      */
-    public function hasParameter($key)
+    public function hasOption($key)
     {
-        return $this->getParameters()->has($key);
+        return $this->getOptions()->has($key);
     }
 
     /**
@@ -37,9 +37,9 @@ trait ImmutableParametersTrait
      *
      * @return mixed value for that key or default given
      */
-    public function getParameter($key, $default = null)
+    public function getOption($key, $default = null)
     {
-        return $this->getParameters()->get($key, $default);
+        return $this->getOptions()->get($key, $default);
     }
 
     /**
@@ -64,9 +64,9 @@ trait ImmutableParametersTrait
      * @throws \RuntimeException e.g. if JMESPath cache directory cannot be written
      * @throws \InvalidArgumentException e.g. if JMESPath builtin functions can't be called
      */
-    public function getParameterValues($expression = '*')
+    public function getOptionValues($expression = '*')
     {
-        return $this->getParameters()->getValues($expression);
+        return $this->getOptions()->getValues($expression);
     }
 
     /**
@@ -76,30 +76,30 @@ trait ImmutableParametersTrait
      *
      * @return array with all data
      */
-    public function getParametersAsArray($recursive = true)
+    public function getOptionsAsArray($recursive = true)
     {
-        return $this->getParameters()->toArray();
+        return $this->getOptions()->toArray();
     }
 
     /**
-     * Return this object's immutable parameters instance.
+     * Return this object's immutable options instance.
      *
-     * @return ImmutableParameters instance used internally
+     * @return ImmutableOptions instance used internally
      */
-    public function getParameters()
+    public function getOptions()
     {
-        $this->ensureParametersCreated();
+        $this->ensureOptionsCreated();
 
-        return $this->parameters;
+        return $this->options;
     }
 
     /**
      * Used internally to ensure that the data property is created.
      */
-    protected function ensureParametersCreated()
+    protected function ensureOptionsCreated()
     {
-        if (null === $this->parameters) {
-            $this->parameters = new ImmutableParameters();
+        if (null === $this->options) {
+            $this->options = new ImmutableOptions();
         }
     }
 }
