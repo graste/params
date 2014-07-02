@@ -146,8 +146,10 @@ class ParametersTraitTest extends BaseTestCase
         $params = new ParametersTraitTester();
         $params->setParameters(array('foo' => 'trololo'));
 
-        $this->assertInstanceOf('Params\Parameters', $params->setParameter('fluent', 'yes'));
-        $this->assertInstanceOf('Params\Parameters', $params->addParameters(array('api' => 'stuff')));
+        $this->assertInstanceOf('Params\Tests\ParametersTraitTester', $params->setParameter('fluent', 'yes'));
+        $this->assertInstanceOf('Params\Tests\ParametersTraitTester', $params->addParameters(array('api' => 'stuff')));
+        $this->assertInstanceOf('Params\Tests\ParametersTraitTester', $params->clearParameters());
+        $this->assertInstanceOf('Params\Tests\ParametersTraitTester', $params->setParameters(array()));
     }
 
     public function testGetKeys()

@@ -34,7 +34,7 @@ of your project works as well:
 ```json
 {
     "require": {
-        "graste/params": "~1.1"
+        "graste/params": "~1.2"
     }
 }
 ```
@@ -96,19 +96,26 @@ $params->filter->bool = 'yes'   // sets $params['filter']['bool'] to value 'yes'
 
 The expression syntax used is provided by Michael Dowling's [JMESPath][11].
 
+## Traits
+
 There are two traits that wrap `Parameters` instances for your classes that
 need to be configurable:
 
 - `ParametersTrait` wraps `parameters`
 - `OptionsTrait` wraps `options`
 
+For fluent API support the methods `add`, `set`, `set(Options|Parameters)` and
+`clear(Options|Parameters)` return the class instance they're mixed into.
+
+## ElasticSearch queries
+
 The syntax sugar `Parameters` gives you is not only nice to define configurable
-classes, but may e.g. be used to create or change ElasticSearch queries:
+classes, but also ease the creation and modification of ElasticSearch queries:
 
 ```php
 $params->filter->bool->must[1]->term->live = false;
 $params->get('filter')->set('bool', …);
-$params->filter->bool->must[] = array();
+$params->filter->bool->must[] = array(…);
 ```
 
 ## Community

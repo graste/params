@@ -3,6 +3,7 @@
 namespace Params;
 
 use Params\Parameters;
+use ArrayAccess;
 use InvalidArgumentException;
 
 /**
@@ -45,11 +46,12 @@ trait ParametersTrait
      * @param mixed $value value to set for the given parameter key
      * @param bool $replace whether or not to replace values of existing keys
      *
-     * @return mixed the value set
+     * @return self instance
      */
     public function setParameter($key, $value, $replace = true)
     {
-        return $this->getParameters()->set($key, $value, $replace);
+        $this->getParameters()->set($key, $value, $replace);
+        return $this;
     }
 
     /**
@@ -66,10 +68,13 @@ trait ParametersTrait
 
     /**
      * Delete all parameters.
+     *
+     * @return self instance
      */
     public function clearParameters()
     {
         $this->getParameters()->clear();
+        return $this;
     }
 
     /**
@@ -84,7 +89,8 @@ trait ParametersTrait
      */
     public function addParameters($data = array(), $replace = true)
     {
-        return $this->getParameters()->add($data, $replace);
+        $this->getParameters()->add($data, $replace);
+        return $this;
     }
 
     /**
@@ -173,6 +179,8 @@ trait ParametersTrait
                 "Invalid argument given. Only the types 'Params\Parameters' and 'array' are supported."
             );
         }
+
+        return $this;
     }
 
     /**

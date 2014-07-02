@@ -146,8 +146,10 @@ class OptionsTraitTest extends BaseTestCase
         $params = new OptionsTraitTester();
         $params->setOptions(array('foo' => 'trololo'));
 
-        $this->assertInstanceOf('Params\Parameters', $params->setOption('fluent', 'yes'));
-        $this->assertInstanceOf('Params\Parameters', $params->addOptions(array('api' => 'stuff')));
+        $this->assertInstanceOf('Params\Tests\OptionsTraitTester', $params->setOption('fluent', 'yes'));
+        $this->assertInstanceOf('Params\Tests\OptionsTraitTester', $params->addOptions(array('api' => 'stuff')));
+        $this->assertInstanceOf('Params\Tests\OptionsTraitTester', $params->clearOptions());
+        $this->assertInstanceOf('Params\Tests\OptionsTraitTester', $params->setOptions(array()));
     }
 
     public function testGetKeys()

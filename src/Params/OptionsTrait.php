@@ -3,6 +3,7 @@
 namespace Params;
 
 use Params\Parameters;
+use ArrayAccess;
 use InvalidArgumentException;
 
 /**
@@ -45,11 +46,12 @@ trait OptionsTrait
      * @param mixed $value value to set for the given option name
      * @param bool $replace whether or not to replace values of existing keys
      *
-     * @return mixed the value set
+     * @return self instance
      */
     public function setOption($key, $value, $replace = true)
     {
-        return $this->getOptions()->set($key, $value, $replace);
+        $this->getOptions()->set($key, $value, $replace);
+        return $this;
     }
 
     /**
@@ -66,10 +68,13 @@ trait OptionsTrait
 
     /**
      * Delete all options.
+     *
+     * @return self instance
      */
     public function clearOptions()
     {
         $this->getOptions()->clear();
+        return $this;
     }
 
     /**
@@ -84,7 +89,8 @@ trait OptionsTrait
      */
     public function addOptions($data = array(), $replace = true)
     {
-        return $this->getOptions()->add($data, $replace);
+        $this->getOptions()->add($data, $replace);
+        return $this;
     }
 
     /**
@@ -160,7 +166,9 @@ trait OptionsTrait
     /**
      * Set an object's options.
      *
-     * @param mixed $options Either 'Parameters' instance or array suitable for creating one.
+     * @param mixed $options array or ArrayAccess implementing instance
+     *
+     * @return self instance
      */
     public function setOptions($options)
     {
@@ -173,6 +181,8 @@ trait OptionsTrait
                 "Invalid argument given. Only the types 'Params\Parameters' and 'array' are supported."
             );
         }
+
+        return $this;
     }
 
     /**

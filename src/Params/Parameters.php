@@ -263,10 +263,13 @@ class Parameters extends ArrayObject implements JsonSerializable
 
     /**
      * Delete all key/value pairs.
+     *
+     * @return Parameters instance
      */
     public function clear()
     {
         $this->exchangeArray(array());
+        return $this;
     }
 
     /**

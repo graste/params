@@ -2,6 +2,12 @@
 
 All new features, changes and fixes should be listed here. Please use tickets to reference changes.
 
+## 1.2.0 (2014/07/02)
+
+* [fix] Documentation of some methods was misleading. Return values for fluent
+  API support within the traits have been adjusted. The `clear` method and it's
+  counterparts in the traits now support fluent API as well.
+
 ## 1.1.0 (2014/07/01)
 
 * [add] `ParametersTrait` that works like the `OptionsTrait`, but wraps
