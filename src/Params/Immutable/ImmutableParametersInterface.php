@@ -12,7 +12,7 @@ interface ImmutableParametersInterface
     /**
      * Returns whether the key exists or not.
      *
-     * @param string $key name of key to check
+     * @param mixed $key name of key to check
      *
      * @return bool true, if key exists; false otherwise
      */
@@ -21,7 +21,7 @@ interface ImmutableParametersInterface
     /**
      * Returns the value for the given key.
      *
-     * @param string $key name of key
+     * @param mixed $key name of key
      * @param mixed $default value to return if key doesn't exist
      *
      * @return mixed value for that key or default given

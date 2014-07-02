@@ -17,7 +17,7 @@ trait ParametersTrait
     /**
      * Sets a given value for the specified key.
      *
-     * @param string $key name of entry
+     * @param mixed $key name of entry
      * @param mixed $value value to set for the given key
      * @param bool $replace whether or not to replace values of existing keys
      *
@@ -26,6 +26,7 @@ trait ParametersTrait
     public function setParameter($key, $value, $replace = true)
     {
         $this->getParameters()->set($key, $value, $replace);
+
         return $this;
     }
 
@@ -40,19 +41,21 @@ trait ParametersTrait
     public function addParameters($data = array(), $replace = true)
     {
         $this->getParameters()->add($data, $replace);
+
         return $this;
     }
 
     /**
      * Removes the given key from the internal array.
      *
-     * @param string $key name of key to remove
+     * @param mixed $key name of key to remove
      *
      * @return Parameters self instance for fluent API
      */
     public function removeParameter($key)
     {
         $this->getParameters()->remove($key);
+
         return $this;
     }
 
@@ -64,6 +67,7 @@ trait ParametersTrait
     public function clearParameters()
     {
         $this->getParameters()->clear();
+
         return $this;
     }
 

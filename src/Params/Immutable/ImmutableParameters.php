@@ -8,15 +8,22 @@ use JsonSerializable;
 use InvalidArgumentException;
 use ArrayAccess;
 use ArrayObject;
+use LogicException;
 
 /**
- * Class that behaves as Parameters, but hides the methods that would
- * allow modifications to the data the instance was constructed with.
+ * Class that gives recursive read-only access to parameters added via
+ * constructor.
  */
 class ImmutableParameters extends ArrayObject implements JsonSerializable, ImmutableParametersInterface
 {
+    /**
+     * @var string default iterator used
+     */
     protected $iterator_class = 'ArrayIterator';
 
+    /**
+     * @var bool whether changing data is allowed or not
+     */
     protected $allow_modification = false;
 
     /**
@@ -45,7 +52,7 @@ class ImmutableParameters extends ArrayObject implements JsonSerializable, Immut
     /**
      * Returns whether the key exists or not.
      *
-     * @param string $key name of key to check
+     * @param mixed $key name of key to check
      *
      * @return bool true, if key exists; false otherwise
      */
@@ -57,7 +64,7 @@ class ImmutableParameters extends ArrayObject implements JsonSerializable, Immut
     /**
      * Returns the value for the given key.
      *
-     * @param string $key name of key
+     * @param mixed $key name of key
      * @param mixed $default value to return if key doesn't exist
      *
      * @return mixed value for that key or default given
@@ -99,9 +106,9 @@ class ImmutableParameters extends ArrayObject implements JsonSerializable, Immut
      *
      * @return mixed|null data in various types (scalar, array etc.) depending on the found results
      *
-     * @throws \JmesPath\SyntaxErrorException on invalid expression syntax
-     * @throws \RuntimeException e.g. if JMESPath cache directory cannot be written
-     * @throws \InvalidArgumentException e.g. if JMESPath builtin functions can't be called
+     * @throws JmesPath\SyntaxErrorException on invalid expression syntax
+     * @throws RuntimeException e.g. if JMESPath cache directory cannot be written
+     * @throws InvalidArgumentException e.g. if JMESPath builtin functions can't be called
      */
     public function getValues($expression = '*')
     {
@@ -114,6 +121,8 @@ class ImmutableParameters extends ArrayObject implements JsonSerializable, Immut
      * @param bool $recursive whether or not nested arrays should be included as array or object
      *
      * @return array with all data
+     *
+     * @throws InvalidArgumentException when no toArray method is available on objects
      */
     public function toArray($recursive = true)
     {
@@ -135,14 +144,14 @@ class ImmutableParameters extends ArrayObject implements JsonSerializable, Immut
 
 
     //
-    // overridden ArrayObject methods
+    // overridden ArrayObject methods (to prevent modification if necessary)
     //
 
 
     /**
      * Returns the value of the specified key.
      *
-     * @param string $key name of key to get
+     * @param mixed $key name of key to get
      *
      * @return mixed|null value or null if non-existant key
      */
@@ -158,10 +167,12 @@ class ImmutableParameters extends ArrayObject implements JsonSerializable, Immut
     /**
      * Sets the given data on the specified key.
      *
-     * @param string $key name of key to set
+     * @param mixed $key name of key to set
      * @param mixed $data data to set for the given key
      *
      * @return void
+     *
+     * @throws LogicException on write attempt when modification is forbidden
      */
     public function offsetSet($key, $data)
     {
@@ -184,6 +195,15 @@ class ImmutableParameters extends ArrayObject implements JsonSerializable, Immut
         return $this->toArray();
     }
 
+    /**
+     * Appends the given new value as the last element to the internal data.
+     *
+     * @param $value value to append
+     *
+     * @return void
+     *
+     * @throws LogicException on write attempt when modification is forbidden
+     */
     public function append($value)
     {
         if (!$this->allow_modification) {
@@ -193,6 +213,15 @@ class ImmutableParameters extends ArrayObject implements JsonSerializable, Immut
         return parent::append($value);
     }
 
+    /**
+     * Exchanges the current data array with another array.
+     *
+     * @param array $data array with key-value pairs to set as new data
+     *
+     * @return array old data
+     *
+     * @throws LogicException on write attempt when modification is forbidden
+     */
     public function exchangeArray($data)
     {
         if (!$this->allow_modification) {
@@ -202,13 +231,24 @@ class ImmutableParameters extends ArrayObject implements JsonSerializable, Immut
         return parent::exchangeArray($data);
     }
 
+    /**
+     * Unsets the value of the given key.
+     *
+     * @param mixed key key to remove
+     *
+     * @return void
+     *
+     * @throws LogicException on write attempt when modification is forbidden
+     */
     public function offsetUnset($key)
     {
         if (!$this->allow_modification) {
             throw new LogicException('Attempting to write to an immutable array');
         }
 
-        return parent::offsetUnset($key);
+        if ($this->offsetExists($key)) {
+            parent::offsetUnset($key);
+        }
     }
 
     /**

@@ -20,7 +20,7 @@ trait ImmutableParametersTrait
     /**
      * Returns whether the parameter exists or not.
      *
-     * @param string $key key to check
+     * @param mixed $key key to check
      *
      * @return bool true, if key exists; false otherwise
      */
@@ -32,7 +32,7 @@ trait ImmutableParametersTrait
     /**
      * Returns the value for the given key.
      *
-     * @param string $key key to get value of
+     * @param mixed $key key to get value of
      * @param mixed $default value to return if key doesn't exist
      *
      * @return mixed value for that key or default given
@@ -82,9 +82,9 @@ trait ImmutableParametersTrait
     }
 
     /**
-     * Return this object's parameters instance.
+     * Return this object's immutable parameters instance.
      *
-     * @return Parameters instance used internally
+     * @return ImmutableParameters instance used internally
      */
     public function getParameters()
     {
