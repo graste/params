@@ -96,7 +96,7 @@ $params->filter->bool = 'yes'   // sets $params['filter']['bool'] to value 'yes'
 
 The expression syntax used is provided by Michael Dowling's [JMESPath][11].
 
-## Traits
+### Traits
 
 There are two traits that wrap `Parameters` instances for your classes that
 need to be configurable:
@@ -107,7 +107,7 @@ need to be configurable:
 For fluent API support the methods `add`, `set`, `set(Options|Parameters)` and
 `clear(Options|Parameters)` return the class instance they're mixed into.
 
-## ElasticSearch queries
+### ElasticSearch queries
 
 The syntax sugar `Parameters` gives you is not only nice to define configurable
 classes, but also ease the creation and modification of ElasticSearch queries:
