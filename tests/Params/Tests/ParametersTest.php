@@ -177,7 +177,7 @@ class ParametersTest extends BaseTestCase
         $this->assertEquals('trololo', $params['key']);
         $this->assertEquals('trololo', $params->get('key'));
         $this->assertTrue($params->has('key'));
-        $this->assertEquals(array('foo', 'key'), $params->keys());
+        $this->assertEquals(array('foo', 'key'), $params->getKeys());
         $this->assertEquals(array('foo', 'key'), $params->getKeys());
     }
 
@@ -193,7 +193,6 @@ class ParametersTest extends BaseTestCase
         $foo = $params->remove('foo');
         $this->assertFalse(isset($params['foo']));
         $this->assertFalse($params->has('foo'));
-        $this->assertEquals('bar', $foo);
     }
 
     public function testAddArray()
@@ -230,7 +229,7 @@ class ParametersTest extends BaseTestCase
         $new = array('foo' => 'omg', 'blah' => 'blub');
         $params->get('nested')->set('bool', $new)->add($new);
         $this->assertEquals($new, $params->get('nested')->get('bool')->toArray());
-        $this->assertEquals($new, $params->search('nested.bool'));
+        $this->assertEquals($new, $params->getValues('nested.bool'));
     }
 
     /**
@@ -246,16 +245,16 @@ class ParametersTest extends BaseTestCase
     {
         $data = $this->getExampleValues();
         $params = new Parameters($data);
-        $result = $params->search();
+        $result = $params->getValues();
         $this->assertEquals($data['str'], $result[0]);
     }
 
     public function testSearchSimple()
     {
         $params = new Parameters($this->getExampleValues());
-        $this->assertEquals('some string', $params->search('str'));
-        $this->assertEquals('some nested string', $params->search('nested.str'));
-        $this->assertEquals('second level', $params->search('nested."2nd level"'));
+        $this->assertEquals('some string', $params->getValues('str'));
+        $this->assertEquals('some nested string', $params->getValues('nested.str'));
+        $this->assertEquals('second level', $params->getValues('nested."2nd level"'));
     }
 
     public function testSearchWildcardExpressions()
@@ -268,10 +267,10 @@ class ParametersTest extends BaseTestCase
                'some nested string',
                'other nested string'
             ),
-            $params->search('*.str')
+            $params->getValues('*.str')
         );
 
-        $result = $params->search('nested.*');
+        $result = $params->getValues('nested.*');
         $this->assertTrue(is_array($result));
         $this->assertCount($nested_count, $result);
         $this->assertEquals('some nested string', $result[0]);
@@ -283,7 +282,7 @@ class ParametersTest extends BaseTestCase
         $data = $this->getExampleValues();
         $params = new Parameters($data);
 
-        $result = $params->search('[str, nested.str]');
+        $result = $params->getValues('[str, nested.str]');
         $this->assertTrue(is_array($result));
         $this->assertCount(2, $result);
         $this->assertEquals('some string', $result[0]);
@@ -293,8 +292,8 @@ class ParametersTest extends BaseTestCase
     public function testSearchOrExpression()
     {
         $params = new Parameters($this->getExampleValues());
-        $this->assertEquals('second level', $params->search('nested."2nd level" || first_level'));
-        $this->assertEquals('first level', $params->search('first_level || nested."2nd level"'));
+        $this->assertEquals('second level', $params->getValues('nested."2nd level" || first_level'));
+        $this->assertEquals('first level', $params->getValues('first_level || nested."2nd level"'));
     }
 
     /**
@@ -305,7 +304,7 @@ class ParametersTest extends BaseTestCase
         $data = $this->getExampleValues();
         $params = new Parameters($data);
 
-        $result = $params->search('[str, nested.str'); // missing closing ]
+        $result = $params->getValues('[str, nested.str'); // missing closing ]
     }
 
     public function testRecursiveGet()
@@ -319,7 +318,7 @@ class ParametersTest extends BaseTestCase
         $params = new Parameters($this->getExampleValues());
         $params->get('nested')->add(array('omg' => 'yes'));
         $this->assertEquals('yes', $params->get('nested')->get('omg'));
-        $this->assertEquals('yes', $params->search('nested.omg'));
+        $this->assertEquals('yes', $params->getValues('nested.omg'));
     }
 
     public function testEach()
@@ -331,16 +330,16 @@ class ParametersTest extends BaseTestCase
             }
             return $value;
         };
-        $params->each($random_int);
+        $params->map($random_int);
         $this->assertEquals('3', $params->int);
     }
 
     public function testKsort()
     {
         $params = new Parameters($this->getExampleValues());
-        $keys = $params->keys();
+        $keys = $params->getKeys();
         $params->ksort();
-        $keys_new = $params->keys();
+        $keys_new = $params->getKeys();
         sort($keys);
         $this->assertEquals($keys, $keys_new);
     }
@@ -401,7 +400,7 @@ EOT;
         $params[] = 'srsly';
         $this->assertEquals('ref', $params->get(1));
         $this->assertEquals('srsly', $params[2]);
-        $this->assertEquals('by', $params->search('[0]'));
+        $this->assertEquals('by', $params->getValues('[0]'));
     }
 
     public function testSampleElasticSearchUseCase()

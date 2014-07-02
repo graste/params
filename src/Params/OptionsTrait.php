@@ -24,7 +24,7 @@ trait OptionsTrait
      */
     public function getOption($key, $default = null)
     {
-        return $this->getOptions()->get($key, $default);
+        return $this->options->get($key, $default);
     }
 
     /**
@@ -36,7 +36,7 @@ trait OptionsTrait
      */
     public function hasOption($key)
     {
-        return $this->getOptions()->has($key);
+        return $this->options->has($key);
     }
 
     /**
@@ -50,7 +50,7 @@ trait OptionsTrait
      */
     public function setOption($key, $value, $replace = true)
     {
-        $this->getOptions()->set($key, $value, $replace);
+        $this->options->set($key, $value, $replace);
         return $this;
     }
 
@@ -63,7 +63,7 @@ trait OptionsTrait
      */
     public function removeOption($key)
     {
-        return $this->getOptions()->remove($key);
+        return $this->options->remove($key);
     }
 
     /**
@@ -73,7 +73,7 @@ trait OptionsTrait
      */
     public function clearOptions()
     {
-        $this->getOptions()->clear();
+        $this->options->clear();
         return $this;
     }
 
@@ -89,7 +89,7 @@ trait OptionsTrait
      */
     public function addOptions($data = array(), $replace = true)
     {
-        $this->getOptions()->add($data, $replace);
+        $this->options->add($data, $replace);
         return $this;
     }
 
@@ -100,7 +100,7 @@ trait OptionsTrait
      */
     public function getOptionKeys()
     {
-        return array_keys((array)$this->getOptions());
+        return $this->options->getKeys();
     }
 
     /**
@@ -125,9 +125,9 @@ trait OptionsTrait
      * @throws \RuntimeException e.g. if JMESPath cache directory cannot be written
      * @throws \InvalidArgumentException e.g. if JMESPath builtin functions can't be called
      */
-    public function searchOptions($expression = '*')
+    public function getOptionValues($expression = '*')
     {
-        return $this->getOptions()->search($expression);
+        return $this->options->getValues($expression);
     }
 
     /**
@@ -139,59 +139,6 @@ trait OptionsTrait
      */
     public function getOptionsAsArray($recursive = true)
     {
-        $data = array();
-
-        foreach ($this->getOptions() as $key => $value) {
-            if (is_object($value) && $recursive && is_callable(array($value, 'toArray'))) {
-                $data[$key] = $value->toArray();
-            } else {
-                $data[$key] = $value;
-            }
-        }
-
-        return $data;
-    }
-
-    /**
-     * Return this object's options instance.
-     *
-     * @return Parameters instance used internally
-     */
-    public function getOptions()
-    {
-        $this->ensureOptionsCreated();
-        return $this->options;
-    }
-
-    /**
-     * Set an object's options.
-     *
-     * @param mixed $options array or ArrayAccess implementing instance
-     *
-     * @return self instance
-     */
-    public function setOptions($options)
-    {
-        if ($options instanceof Parameters) {
-            $this->options = $options;
-        } elseif (is_array($options) || $options instanceof ArrayAccess) {
-            $this->options = new Parameters($options);
-        } else {
-            throw new InvalidArgumentException(
-                "Invalid argument given. Only the types 'Params\Parameters' and 'array' are supported."
-            );
-        }
-
-        return $this;
-    }
-
-    /**
-     * Used internally to ensure that the options property is created.
-     */
-    protected function ensureOptionsCreated()
-    {
-        if (null === $this->options) {
-            $this->options = new Parameters();
-        }
+        return $this->options->toArray($recursive);
     }
 }
