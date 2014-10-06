@@ -111,8 +111,7 @@ The expression syntax used is provided by Michael Dowling's [JMESPath][11].
 
 ### Traits
 
-There are two traits that wrap `Parameters` or `Options` instances for your
-classes that need to be configurable:
+There are [Traits][16] may be used for own configurable classes:
 
 - `ImmutableParametersTrait` wraps `parameters`
 - `ParametersTrait` wraps `parameters`
@@ -126,7 +125,7 @@ the class instance they're mixed into.
 
 ### ElasticSearch queries
 
-The syntax sugar `Parameters` gives you is not only nice to define configurable
+The syntax sugar `Parameters` provides is not only nice to define configurable
 classes, but also eases the creation and modification of ElasticSearch queries:
 
 ```php
@@ -174,3 +173,4 @@ See [`CHANGELOG.md`](CHANGELOG.md) for more information about changes.
 [13]: http://help.github.com/pull-requests/ "Github docs on pull requests"
 [14]: LICENSE.md "license file with link to original full text of the license"
 [15]: https://waffle.io/graste/params "graste/params on waffle"
+[16]: http://php.net/manual/en/language.oop5.traits.php "Traits on php.net"
