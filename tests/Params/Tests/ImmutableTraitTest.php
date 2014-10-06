@@ -9,6 +9,7 @@ class ImmutableTraitTest extends BaseTestCase
         $p = new ImmutableTraitTester(false);
         $this->assertEquals(null, $p->getParameter('foo'));
         $this->assertEquals(null, $p->getOption('foo'));
+        $this->assertEquals(null, $p->getSetting('foo'));
     }
 
     public function testGet()
@@ -16,6 +17,7 @@ class ImmutableTraitTest extends BaseTestCase
         $p = new ImmutableTraitTester();
         $this->assertEquals('bar', $p->getParameter('foo'));
         $this->assertEquals('bar', $p->getOption('foo'));
+        $this->assertEquals('bar', $p->getSetting('foo'));
     }
 
     public function testHas()
@@ -25,6 +27,8 @@ class ImmutableTraitTest extends BaseTestCase
         $this->assertFalse($p->hasParameter('bar'));
         $this->assertTrue($p->hasOption('foo'));
         $this->assertFalse($p->hasOption('bar'));
+        $this->assertTrue($p->hasSetting('foo'));
+        $this->assertFalse($p->hasSetting('bar'));
     }
 
     public function testGetValues()
@@ -32,6 +36,7 @@ class ImmutableTraitTest extends BaseTestCase
         $p = new ImmutableTraitTester();
         $this->assertEquals(array('bar'), $p->getParameterValues());
         $this->assertEquals(array('bar'), $p->getOptionValues());
+        $this->assertEquals(array('bar'), $p->getSettingValues());
     }
 
     public function testGetAsArray()
@@ -39,6 +44,7 @@ class ImmutableTraitTest extends BaseTestCase
         $p = new ImmutableTraitTester();
         $this->assertEquals(array('foo' => 'bar'), $p->getParametersAsArray());
         $this->assertEquals(array('foo' => 'bar'), $p->getOptionsAsArray());
+        $this->assertEquals(array('foo' => 'bar'), $p->getSettingsAsArray());
     }
 
     /**
@@ -57,5 +63,14 @@ class ImmutableTraitTest extends BaseTestCase
     {
         $p = new ImmutableTraitTester();
         $p->getOptions()['trololo'] = 'yes';
+    }
+
+    /**
+     * @expectedException \LogicException
+     */
+    public function testSetSettingsThrows()
+    {
+        $p = new ImmutableTraitTester();
+        $p->getSettings()['trololo'] = 'yes';
     }
 }

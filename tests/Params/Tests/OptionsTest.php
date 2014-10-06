@@ -411,9 +411,9 @@ EOT;
         $params->append('by');
         $params->set(1, 'ref');
         $params[] = 'srsly';
+        $this->assertEquals('by', $params->get(0));
         $this->assertEquals('ref', $params->get(1));
         $this->assertEquals('srsly', $params[2]);
-        $this->assertEquals('by', $params->getValues('[0]'));
     }
 
     public function testSampleElasticSearchUseCase()

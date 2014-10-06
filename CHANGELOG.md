@@ -2,6 +2,12 @@
 
 All new features, changes and fixes should be listed here. Please use tickets to reference changes.
 
+## 2.1.0 (2014/10/07)
+
+* [add] `Settings`, `SettingsTrait`, `SettingsInterface`
+* [add] `ImmutableSettings`, `ImmutableSettingsTrait`,
+  `ImmutableSettingsInterface`
+
 ## 2.0.1 (2014/10/06)
 
 Updated composer dependencies for:

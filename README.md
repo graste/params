@@ -34,7 +34,7 @@ of your project works as well:
 ```json
 {
     "require": {
-        "graste/params": "~2.0"
+        "graste/params": "~2.1.0"
     }
 }
 ```
@@ -64,6 +64,10 @@ $params = new \Params\Immutable\ImmutableParameters($data);
 // do you like options instead of parameters in your classes?
 $params = new \Params\Options($data);
 $params = new \Params\Immutable\ImmutableOptions($data);
+
+// do you like settings instead of parameters in your classes?
+$params = new \Params\Settings($data);
+$params = new \Params\Immutable\ImmutableSettings($data);
 
 // use it as a recursive object:
 
@@ -114,6 +118,8 @@ classes that need to be configurable:
 - `ParametersTrait` wraps `parameters`
 - `ImmutableOptionsTrait` wraps `options`
 - `OptionsTrait` wraps `options`
+- `ImmutableSettingsTrait` wraps `settings`
+- `SettingsTrait` wraps `settings`
 
 For fluent API support the methods `add`, `set`, `remove` and `clear` return
 the class instance they're mixed into.

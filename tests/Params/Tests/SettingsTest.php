@@ -2,13 +2,13 @@
 
 namespace Params\Tests;
 
-use Params\Parameters;
+use Params\Settings;
 
-class ParametersTest extends BaseTestCase
+class SettingsTest extends BaseTestCase
 {
     public function testConstruct()
     {
-        $p = new Parameters();
+        $p = new Settings();
 
         $this->assertEquals(0, count($p->toArray()));
         $this->assertEquals(0, $p->count());
@@ -18,9 +18,9 @@ class ParametersTest extends BaseTestCase
     public function testCreate()
     {
         $data = $this->getExampleValues();
-        $params = new Parameters($data);
+        $params = new Settings($data);
 
-        $this->assertInstanceOf('\\Params\\Parameters', $params);
+        $this->assertInstanceOf('\\Params\\Settings', $params);
         $this->assertEquals($data['str'], $params->get('str'));
         $this->assertEquals($data['int'], $params->get('int'));
         $this->assertEquals($data['bool'], $params->get('bool'));
@@ -29,7 +29,7 @@ class ParametersTest extends BaseTestCase
     public function testToArray()
     {
         $data = $this->getExampleValues();
-        $params = new Parameters($data);
+        $params = new Settings($data);
 
         $this->assertEquals($data, $params->toArray());
     }
@@ -40,7 +40,7 @@ class ParametersTest extends BaseTestCase
     public function testToArrayWithWrongObjectThrows()
     {
         $data = $this->getExampleValues();
-        $params = new Parameters($data);
+        $params = new Settings($data);
         $params->set('obj', $this);
 
         $params->toArray();
@@ -48,7 +48,7 @@ class ParametersTest extends BaseTestCase
 
     public function testGetDefaultValues()
     {
-        $params = new Parameters(
+        $params = new Settings(
             array(
                 'nil' => null,
                 'null_as_string' => '0',
@@ -74,7 +74,7 @@ class ParametersTest extends BaseTestCase
 
     public function testSetValue()
     {
-        $params = new Parameters(array('foo' => 'trololo'));
+        $params = new Settings(array('foo' => 'trololo'));
         $params->set('foo', 'bar');
         $params->set('nil', null);
 
@@ -84,7 +84,7 @@ class ParametersTest extends BaseTestCase
 
     public function testSet()
     {
-        $params = new Parameters();
+        $params = new Settings();
         $params['foo'] = 'bar';
         $params->blah = 'blub';
         $this->assertEquals('bar', $params->foo);
@@ -93,7 +93,7 @@ class ParametersTest extends BaseTestCase
 
     public function testSetDoesntReplace()
     {
-        $params = new Parameters(array('foo' => 'bar'));
+        $params = new Settings(array('foo' => 'bar'));
         $params->set('foo', 'omg', false);
         $this->assertEquals('bar', $params->foo);
         $params->set('foo', 'omg', true);
@@ -102,7 +102,7 @@ class ParametersTest extends BaseTestCase
 
     public function testAddDoesntReplace()
     {
-        $params = new Parameters(array('foo' => 'bar'));
+        $params = new Settings(array('foo' => 'bar'));
         $params->add(array('foo' => 'omg'), false);
         $this->assertEquals('bar', $params->foo);
         $params->add(array('foo' => 'omg'), true);
@@ -112,7 +112,7 @@ class ParametersTest extends BaseTestCase
 /*
     public function testAutoCreateSet()
     {
-        $params = new Parameters();
+        $params = new Settings();
         //$params->meh->omg = 'yes';
         $params['one']['two'] = 'three';
         //$this->assertEquals('yes', $params->get('meh')->get('omg'));
@@ -124,7 +124,7 @@ class ParametersTest extends BaseTestCase
      */
     public function testSetEmptyKeyFails()
     {
-        $params = new Parameters(array('foo' => 'trololo'));
+        $params = new Settings(array('foo' => 'trololo'));
         $params->set('', 'bar');
     }
 
@@ -133,21 +133,21 @@ class ParametersTest extends BaseTestCase
      */
     public function testSetNullKeyFails()
     {
-        $params = new Parameters(array('foo' => 'trololo'));
+        $params = new Settings(array('foo' => 'trololo'));
         $params->set(null, 'bar');
     }
 
     public function testFluentApi()
     {
-        $params = new Parameters(array('foo' => 'trololo'));
+        $params = new Settings(array('foo' => 'trololo'));
 
-        $this->assertInstanceOf('Params\Parameters', $params->set('fluent', 'yes'));
-        $this->assertInstanceOf('Params\Parameters', $params->add(array('api' => 'stuff')));
+        $this->assertInstanceOf('Params\Settings', $params->set('fluent', 'yes'));
+        $this->assertInstanceOf('Params\Settings', $params->add(array('api' => 'stuff')));
     }
 
     public function testGetKeys()
     {
-        $params = new Parameters(array('foo' => 'trololo'));
+        $params = new Settings(array('foo' => 'trololo'));
         $params->set('foo', 'bar');
         $params->set('nil', null);
 
@@ -156,7 +156,7 @@ class ParametersTest extends BaseTestCase
 
     public function testClearValues()
     {
-        $params = new Parameters(array('foo' => 'bar'));
+        $params = new Settings(array('foo' => 'bar'));
         $params->clear();
 
         $this->assertEquals(array(), $params->toArray());
@@ -164,27 +164,27 @@ class ParametersTest extends BaseTestCase
 
     public function testArrayAccessGet()
     {
-        $params = new Parameters(array('foo' => 'bar'));
+        $params = new Settings(array('foo' => 'bar'));
         $this->assertEquals('bar', $params['foo']);
         $this->assertEquals(array('foo' => 'bar'), $params->toArray());
     }
 
     public function testArrayAccessExists()
     {
-        $params = new Parameters(array('foo' => 'bar'));
+        $params = new Settings(array('foo' => 'bar'));
         $this->assertTrue(isset($params['foo']));
     }
 
     public function testArrayAccessUnset()
     {
-        $params = new Parameters(array('foo' => 'bar'));
+        $params = new Settings(array('foo' => 'bar'));
         unset($params['foo']);
         $this->assertFalse(isset($params['foo']));
     }
 
     public function testArrayAccessSet()
     {
-        $params = new Parameters(array('foo' => 'bar'));
+        $params = new Settings(array('foo' => 'bar'));
         $params['key'] = 'trololo';
 
         $this->assertEquals('trololo', $params['key']);
@@ -196,13 +196,13 @@ class ParametersTest extends BaseTestCase
 
     public function testArrayAccessGetNonExistantGivesNull()
     {
-        $params = new Parameters();
+        $params = new Settings();
         $this->assertNull($params['non-existant']);
     }
 
     public function testRemove()
     {
-        $params = new Parameters(array('foo' => 'bar'));
+        $params = new Settings(array('foo' => 'bar'));
         $foo = $params->remove('foo');
         $this->assertFalse(isset($params['foo']));
         $this->assertFalse($params->has('foo'));
@@ -210,7 +210,7 @@ class ParametersTest extends BaseTestCase
 
     public function testAddArray()
     {
-        $params = new Parameters(array('foo' => 'bar'));
+        $params = new Settings(array('foo' => 'bar'));
         $new = array('foo' => 'omg', 'blah' => 'blub');
         $params->add($new);
         $this->assertEquals(
@@ -224,8 +224,8 @@ class ParametersTest extends BaseTestCase
 
     public function testAddParameters()
     {
-        $params = new Parameters(array('foo' => 'bar'));
-        $new_params = new Parameters(array('foo' => 'omg', 'blah' => 'blub'));
+        $params = new Settings(array('foo' => 'bar'));
+        $new_params = new Settings(array('foo' => 'omg', 'blah' => 'blub'));
         $params->add($new_params);
         $this->assertEquals(
             array(
@@ -238,7 +238,7 @@ class ParametersTest extends BaseTestCase
 
     public function testTypeChangeAndAddOnDeeperLevel()
     {
-        $params = new Parameters($this->getExampleValues());
+        $params = new Settings($this->getExampleValues());
         $new = array('foo' => 'omg', 'blah' => 'blub');
         $params->get('nested')->set('bool', $new)->add($new);
         $this->assertEquals($new, $params->get('nested')->get('bool')->toArray());
@@ -250,21 +250,21 @@ class ParametersTest extends BaseTestCase
      */
     public function testAddInvalidType()
     {
-        $params = new Parameters(array('foo' => 'bar'));
+        $params = new Settings(array('foo' => 'bar'));
         $params->add(new \StdClass());
     }
 
     public function testSearchDefaultExpression()
     {
         $data = $this->getExampleValues();
-        $params = new Parameters($data);
+        $params = new Settings($data);
         $result = $params->getValues();
         $this->assertEquals($data['str'], $result[0]);
     }
 
     public function testSearchSimple()
     {
-        $params = new Parameters($this->getExampleValues());
+        $params = new Settings($this->getExampleValues());
         $this->assertEquals('some string', $params->getValues('str'));
         $this->assertEquals('some nested string', $params->getValues('nested.str'));
         $this->assertEquals('second level', $params->getValues('nested."2nd level"'));
@@ -274,7 +274,7 @@ class ParametersTest extends BaseTestCase
     {
         $data = $this->getExampleValues();
         $nested_count = count($data['nested']);
-        $params = new Parameters($data);
+        $params = new Settings($data);
         $this->assertEquals(
             array(
                'some nested string',
@@ -293,7 +293,7 @@ class ParametersTest extends BaseTestCase
     public function testSearchMultiSelectListExpression()
     {
         $data = $this->getExampleValues();
-        $params = new Parameters($data);
+        $params = new Settings($data);
 
         $result = $params->getValues('[str, nested.str]');
         $this->assertTrue(is_array($result));
@@ -304,7 +304,7 @@ class ParametersTest extends BaseTestCase
 
     public function testSearchOrExpression()
     {
-        $params = new Parameters($this->getExampleValues());
+        $params = new Settings($this->getExampleValues());
         $this->assertEquals('second level', $params->getValues('nested."2nd level" || first_level'));
         $this->assertEquals('first level', $params->getValues('first_level || nested."2nd level"'));
     }
@@ -315,20 +315,20 @@ class ParametersTest extends BaseTestCase
     public function testSearchSyntaxErrorException()
     {
         $data = $this->getExampleValues();
-        $params = new Parameters($data);
+        $params = new Settings($data);
 
         $result = $params->getValues('[str, nested.str'); // missing closing ]
     }
 
     public function testRecursiveGet()
     {
-        $params = new Parameters($this->getExampleValues());
+        $params = new Settings($this->getExampleValues());
         $this->assertEquals('second level', $params->get('nested')->get("2nd level"));
     }
 
     public function testDeepArrayModification()
     {
-        $params = new Parameters($this->getExampleValues());
+        $params = new Settings($this->getExampleValues());
         $params->get('nested')->add(array('omg' => 'yes'));
         $this->assertEquals('yes', $params->get('nested')->get('omg'));
         $this->assertEquals('yes', $params->getValues('nested.omg'));
@@ -336,7 +336,7 @@ class ParametersTest extends BaseTestCase
 
     public function testEach()
     {
-        $params = new Parameters($this->getExampleValues());
+        $params = new Settings($this->getExampleValues());
         $random_int = function($key, $value) {
             if ($key === 'int') {
                 return '3'; // chosen by fair dice roll
@@ -349,7 +349,7 @@ class ParametersTest extends BaseTestCase
 
     public function testKsort()
     {
-        $params = new Parameters($this->getExampleValues());
+        $params = new Settings($this->getExampleValues());
         $keys = $params->getKeys();
         $params->ksort();
         $keys_new = $params->getKeys();
@@ -359,14 +359,14 @@ class ParametersTest extends BaseTestCase
 
     public function testIterator()
     {
-        $params = new Parameters($this->getExampleValues());
+        $params = new Settings($this->getExampleValues());
         $iter = $params->getIterator();
         $this->assertTrue($iter instanceof \ArrayIterator);
     }
 
     public function testGetArrayCopy()
     {
-        $params = new Parameters($this->getExampleValues());
+        $params = new Settings($this->getExampleValues());
         $array = $params->getArrayCopy();
         $this->assertTrue(is_array($array));
         $this->assertTrue(is_array($array['nested']));
@@ -374,7 +374,7 @@ class ParametersTest extends BaseTestCase
 
     public function testDeepClone()
     {
-        $params = new Parameters($this->getExampleValues());
+        $params = new Settings($this->getExampleValues());
         $clone = clone $params;
         $this->assertTrue($params == $clone);
         $this->assertFalse($params === $clone);
@@ -386,7 +386,7 @@ class ParametersTest extends BaseTestCase
 
     public function testArrayModificationByReference()
     {
-        $params = new Parameters($this->getExampleValues());
+        $params = new Settings($this->getExampleValues());
         $nested = $params->get('nested');
         $nested->set('by', 'reference');
         $this->assertEquals('reference', $params->get('nested')->get('by'));
@@ -396,7 +396,7 @@ class ParametersTest extends BaseTestCase
 
     public function testToString()
     {
-        $params = new Parameters(array('foo' => 'bar'));
+        $params = new Settings(array('foo' => 'bar'));
         $expected = <<<EOT
 array (
   'foo' => 'bar',
@@ -407,7 +407,7 @@ EOT;
 
     public function testAppendNumericIndizes()
     {
-        $params = new Parameters($this->getExampleValues());
+        $params = new Settings($this->getExampleValues());
         $params->append('by');
         $params->set(1, 'ref');
         $params[] = 'srsly';
@@ -418,14 +418,14 @@ EOT;
 
     public function testSampleElasticSearchUseCase()
     {
-        $params = new Parameters($this->getExampleElasticSearchQueryAsArray());
+        $params = new Settings($this->getExampleElasticSearchQueryAsArray());
         $params->filter->bool->must[1]->term->live = false;
         $this->assertFalse($params->filter->bool->must[1]->get('term')->live);
     }
 
     public function testJsonSerializable()
     {
-        $params = new Parameters($this->getExampleElasticSearchQueryAsArray());
+        $params = new Settings($this->getExampleElasticSearchQueryAsArray());
         json_encode($params, JSON_PRETTY_PRINT);
         $this->assertEquals(JSON_ERROR_NONE, json_last_error());
     }

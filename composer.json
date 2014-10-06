@@ -1,8 +1,8 @@
 {
     "name": "graste/params",
     "type": "library",
-    "description": "Array wrapper that eases the retrieval of values.",
-    "keywords": ["parameters", "options", "array", "search", "library"],
+    "description": "Array wrapper that eases the retrieval of values. Has parameters, options and settings traits for inclusion in other libs.",
+    "keywords": ["parameters", "options", "settings", "array", "search", "library"],
     "homepage": "https://github.com/graste/params",
     "license": "CC-BY-SA-3.0",
     "authors": [
@@ -38,7 +38,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "2.0-dev"
+            "dev-master": "2.1-dev"
         }
     }
 }
