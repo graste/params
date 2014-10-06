@@ -2,6 +2,15 @@
 
 All new features, changes and fixes should be listed here. Please use tickets to reference changes.
 
+## 2.0.1 (2014/10/06)
+
+Updated composer dependencies for:
+
+* jmespath.php
+* phpunit
+* php-codesniffer
+* sami
+
 ## 2.0.0 (2014/07/03)
 
 BREAKING CHANGES. You can now have `Parameters` or `Options` in a mutable or
