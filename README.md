@@ -150,7 +150,7 @@ To develop on this repository clone your fork and use the `Makefile` targets:
 - `make tests` runs the phpunit tests
 - `make code-sniffer` runs the code sniffer
 
-The code trys to adhere to the following PHP-FIG standards: [PSR-0][6],
+The code tries to adhere to the following PHP-FIG standards: [PSR-0][6],
 [PSR-1][7] and [PSR-2][8]
 
 ## Changelog
