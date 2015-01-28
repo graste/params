@@ -2,6 +2,10 @@
 
 All new features, changes and fixes should be listed here. Please use tickets to reference changes.
 
+## 2.1.1 (2015/28/07)
+
+* [chg] Updated composer.json to allow for newer jmespath.php versions
+
 ## 2.1.0 (2014/10/07)
 
 * [add] `Settings`, `SettingsTrait`, `SettingsInterface`
