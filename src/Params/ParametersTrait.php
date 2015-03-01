@@ -2,14 +2,13 @@
 
 namespace Params;
 
-use Params\Immutable\ImmutableParametersTrait;
-use Params\Parameters;
 use ArrayAccess;
 use InvalidArgumentException;
+use Params\Immutable\ImmutableParametersTrait;
+use Params\Parameters;
 
 /**
- * Trait that contains a Parameters instance to use for nestable configuration
- * parameters.
+ * Trait that contains a Parameters instance to use for nestable configuration parameters.
  */
 trait ParametersTrait
 {
@@ -88,9 +87,7 @@ trait ParametersTrait
         if (is_array($parameters) || $parameters instanceof ArrayAccess) {
             $this->parameters = new Parameters($parameters);
         } else {
-            throw new InvalidArgumentException(
-                "Invalid argument given. Only the 'array' or 'ArrayAccess' implementing objects are supported."
-            );
+            throw new InvalidArgumentException('Only arrays or ArrayAccess implementing objects are supported.');
         }
 
         return $this;

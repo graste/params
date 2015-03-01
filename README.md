@@ -12,13 +12,7 @@
 
 ## Purpose
 
-Array wrapper object that eases the retrieval of values. It provides a `get`
-method that can return a default value if the given key is missing. In addition
-to the usage as a normal array and the various `get`, `set`, `has` etc. methods
-Parameters defines a `getValues($expression)` method that allows the retrieval
-of values by providing more or less complex expressions. You can easily retrieve
-values from nested arrays or get several values from different nesting levels
-with one call. There are traits for convenient creation of configurable classes.
+Array wrapper object that eases the retrieval of values. It provides a `get` method that can return a default value if the given key is missing. In addition to the usage as a normal array and the various `get`, `set`, `has` etc. methods Parameters defines a `getValues($expression)` method that allows the retrieval of values by providing more or less complex expressions. You can easily retrieve values from nested arrays or get several values from different nesting levels with one call. There are traits for convenient creation of configurable classes.
 
 ## Requirements and installation
 
@@ -28,13 +22,12 @@ Install the library via [Composer][10]:
 
 ```./composer.phar require graste/params [optional version]```
 
-Adding it manually as a vendor library requirement to the `composer.json` file
-of your project works as well:
+Adding it manually as a vendor library requirement to the `composer.json` file of your project works as well:
 
 ```json
 {
     "require": {
-        "graste/params": "~2.1.0"
+        "graste/params": "~3.0.0"
     }
 }
 ```
@@ -120,13 +113,11 @@ There are [Traits][16] may be used for own configurable classes:
 - `ImmutableSettingsTrait` wraps `settings`
 - `SettingsTrait` wraps `settings`
 
-For fluent API support the methods `add`, `set`, `remove` and `clear` return
-the class instance they're mixed into.
+For fluent API support the methods `add`, `set`, `remove` and `clear` return the class instance they're mixed into.
 
 ### ElasticSearch queries
 
-The syntax sugar `Parameters` provides is not only nice to define configurable
-classes, but also eases the creation and modification of ElasticSearch queries:
+The syntax sugar `Parameters` provides is not only nice to define configurable classes, but also eases the creation and modification of ElasticSearch queries:
 
 ```php
 $params->filter->bool->must[1]->term->live = false;
@@ -136,13 +127,11 @@ $params->filter->bool->must[] = array(…);
 
 ## Community
 
-None, but you may join the `#environaut` freenode IRC channel anytime
-([`irc://irc.freenode.org/environaut`](irc://irc.freenode.org/environaut)) :-)
+None, but you may join the `#environaut` freenode IRC channel anytime ([`irc://irc.freenode.org/environaut`](irc://irc.freenode.org/environaut)) :-)
 
 ## Contribution
 
-Please contribute by [forking][12] and sending a [pull request][13]. More
-information can be found in the [`CONTRIBUTING.md`](CONTRIBUTING.md) file.
+Please contribute by [forking][12] and sending a [pull request][13]. More information can be found in the [`CONTRIBUTING.md`](CONTRIBUTING.md) file.
 
 To develop on this repository clone your fork and use the `Makefile` targets:
 
@@ -150,8 +139,9 @@ To develop on this repository clone your fork and use the `Makefile` targets:
 - `make tests` runs the phpunit tests
 - `make code-sniffer` runs the code sniffer
 
-The code tries to adhere to the following PHP-FIG standards: [PSR-0][6],
-[PSR-1][7] and [PSR-2][8]
+The code tries to adhere to the following PHP-FIG standards: [PSR-4][6], [PSR-1][7] and [PSR-2][8]. The current license is [MIT](LICENSE.md).
+
+The authors and contributors are mentioned in the [github contributors graph](graphs/contributors) of this repository. The license file must be left intact for attribution and sharing of this work.
 
 ## Changelog
 
@@ -163,7 +153,7 @@ See [`CHANGELOG.md`](CHANGELOG.md) for more information about changes.
 [3]: https://coveralls.io/r/graste/params "graste/params on coveralls"
 [4]: https://www.versioneye.com/user/projects/53aefa3b404aa6df8c000082 "graste/params on versioneye"
 [5]: https://scrutinizer-ci.com/g/graste/params/?branch=master "graste/params on scrutinizer-ci"
-[6]: http://www.php-fig.org/psr/psr-0/ "PSR-0 Autoloading Standard"
+[6]: http://www.php-fig.org/psr/psr-4/ "PSR-4 Autoloading Standard"
 [7]: http://www.php-fig.org/psr/psr-1/ "PSR-1 Basic Coding Standard"
 [8]: http://www.php-fig.org/psr/psr-2/ "PSR-2 Coding Style Guide"
 [9]: https://github.com/graste/params/releases "graste/params releases on github"

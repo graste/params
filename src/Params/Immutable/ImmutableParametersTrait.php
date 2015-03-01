@@ -2,19 +2,11 @@
 
 namespace Params\Immutable;
 
-use Params\Immutable\ImmutableParameters;
-use ArrayAccess;
-use InvalidArgumentException;
-
 /**
- * Trait that contains an ImmutableParameters instance to use for nestable
- * configuration parameters.
+ * Trait that contains an ImmutableParameters instance to use for nestable configuration parameters.
  */
 trait ImmutableParametersTrait
 {
-    /**
-     * @var ImmutableParameters
-     */
     protected $parameters;
 
     /**

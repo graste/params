@@ -2,14 +2,12 @@
 
 namespace Params;
 
-use Params\Immutable\ImmutableOptionsTrait;
-use Params\Options;
 use ArrayAccess;
 use InvalidArgumentException;
+use Params\Immutable\ImmutableOptionsTrait;
 
 /**
- * Trait that contains an Options instance to use for nestable configuration
- * options.
+ * Trait that contains an Options instance to use for nestable configuration options.
  */
 trait OptionsTrait
 {
@@ -88,9 +86,7 @@ trait OptionsTrait
         if (is_array($options) || $options instanceof ArrayAccess) {
             $this->options = new Options($options);
         } else {
-            throw new InvalidArgumentException(
-                "Invalid argument given. Only the 'array' or 'ArrayAccess' implementing objects are supported."
-            );
+            throw new InvalidArgumentException('Only arrays or ArrayAccess implementing objects are supported.');
         }
 
         return $this;
