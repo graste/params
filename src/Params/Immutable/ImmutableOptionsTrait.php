@@ -2,19 +2,11 @@
 
 namespace Params\Immutable;
 
-use Params\Immutable\ImmutableOptions;
-use ArrayAccess;
-use InvalidArgumentException;
-
 /**
- * Trait that contains an ImmutableOptions instance to use for nestable
- * configuration options.
+ * Trait that contains an ImmutableOptions instance to use for nestable configuration options.
  */
 trait ImmutableOptionsTrait
 {
-    /**
-     * @var ImmutableOptions
-     */
     protected $options;
 
     /**

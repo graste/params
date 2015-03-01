@@ -1,38 +1,39 @@
 <?php
 
-namespace Params\Immutable;
+namespace Params;
 
 /**
- * Trait that contains an ImmutableSettings instance to use for nestable configuration settings.
+ * Interface for a class that wraps an associative array for
+ * more convenient access of keys and values while the actual values
+ * are not mutable via methods like set, add, remove etc.
  */
-trait ImmutableSettingsTrait
+interface ParamsInterface
 {
-    protected $settings;
-
     /**
-     * Returns whether the setting exists or not.
+     * Returns whether the key exists or not.
      *
-     * @param mixed $key key to check
+     * @param mixed $key name of key to check
      *
      * @return bool true, if key exists; false otherwise
      */
-    public function hasSetting($key)
-    {
-        return $this->getSettings()->has($key);
-    }
+    public function has($key);
 
     /**
      * Returns the value for the given key.
      *
-     * @param mixed $key key to get value of
+     * @param mixed $key name of key
      * @param mixed $default value to return if key doesn't exist
      *
      * @return mixed value for that key or default given
      */
-    public function getSetting($key, $default = null)
-    {
-        return $this->getSettings()->get($key, $default);
-    }
+    public function get($key, $default = null);
+
+    /**
+     * Returns all first level key names.
+     *
+     * @return array of keys
+     */
+    public function getKeys();
 
     /**
      * Allows to search for specific data values via JMESPath expressions.
@@ -46,7 +47,8 @@ trait ImmutableSettingsTrait
      * - "[key, nested[0]"      returns first level "key" value and the first value of the "nested" key array
      * - "nested.key || key"    returns the value of the first matching expression
      *
-     * @see http://jmespath.readthedocs.org/en/latest/ and https://github.com/mtdowling/jmespath.php
+     * @see http://jmespath.readthedocs.org/en/latest/
+     * @see https://github.com/mtdowling/jmespath.php
      *
      * @param string $expression JMESPath expression to evaluate on stored data
      *
@@ -56,42 +58,14 @@ trait ImmutableSettingsTrait
      * @throws \RuntimeException e.g. if JMESPath cache directory cannot be written
      * @throws \InvalidArgumentException e.g. if JMESPath builtin functions can't be called
      */
-    public function getSettingValues($expression = '*')
-    {
-        return $this->getSettings()->getValues($expression);
-    }
+    public function getValues($expression = '*');
 
     /**
      * Returns the data as an associative array.
      *
      * @param bool $recursive whether or not nested arrays should be included as array or object
      *
-     * @return array with all data
+     * @return array of all data
      */
-    public function getSettingsAsArray($recursive = true)
-    {
-        return $this->getSettings()->toArray();
-    }
-
-    /**
-     * Return this object's immutable settings instance.
-     *
-     * @return SettingsImmutable instance used internally
-     */
-    public function getSettings()
-    {
-        $this->ensureSettingsCreated();
-
-        return $this->settings;
-    }
-
-    /**
-     * Used internally to ensure that the data property is created.
-     */
-    protected function ensureSettingsCreated()
-    {
-        if (null === $this->settings) {
-            $this->settings = new ImmutableSettings();
-        }
-    }
+    public function toArray($recursive = true);
 }

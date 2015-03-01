@@ -2,6 +2,28 @@
 
 All new features, changes and fixes should be listed here. Please use tickets to reference changes.
 
+## 3.0.0 (2015/03/01)
+
+This release may be a breaking change for people that used `instanceof` checks
+or set a different default iterator for the `ArrayObject` class. For People
+using the classes or traits as-is nothing should change. The tests were not
+modified at all. There may be not enough or they may be badly written though.
+That's why this release version gets a major +1.
+
+There's now a common base class `ConfigurableArrayObject` that takes an array
+with options that may modify the behaviour of that class. First option is
+`mutable` to define whether the object should prevent modifications of the
+internal data set via the constructor. The second known option is `iterator`.
+That option takes a fully qualified class name to set the default iterator
+being used. Future releases may see additional options.
+
+* [chg] License changed to [MIT](LICENSE.md) (#14)
+* [chg] Refactoring and change in structure of inheritance/interfaces (#13)
+* [add] `ConfigurableArrayObject` as base class for all variants (#13)
+* [add] `SettingsMutableInterface`, `ParametersMutableInterface`, `OptionsMutableInterface` (#13)
+* [add] `ParamsInterface` and `ParamsMutableInterface` to use for the others as a base (#13)
+* [chg] Updated composer dependencies in lock file (only dev libs should be affected)
+
 ## 2.1.1 (2015/28/07)
 
 * [chg] Updated composer.json to allow for newer jmespath.php versions
@@ -9,8 +31,7 @@ All new features, changes and fixes should be listed here. Please use tickets to
 ## 2.1.0 (2014/10/07)
 
 * [add] `Settings`, `SettingsTrait`, `SettingsInterface`
-* [add] `ImmutableSettings`, `ImmutableSettingsTrait`,
-  `ImmutableSettingsInterface`
+* [add] `ImmutableSettings`, `ImmutableSettingsTrait`, `ImmutableSettingsInterface`
 
 ## 2.0.1 (2014/10/06)
 

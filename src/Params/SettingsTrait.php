@@ -2,14 +2,13 @@
 
 namespace Params;
 
-use Params\Immutable\ImmutableSettingsTrait;
-use Params\Settings;
 use ArrayAccess;
 use InvalidArgumentException;
+use Params\Immutable\ImmutableSettingsTrait;
+use Params\Settings;
 
 /**
- * Trait that contains a Settings instance to use for nestable configuration
- * settings.
+ * Trait that contains a Settings instance to use for nestable mutable configuration settings.
  */
 trait SettingsTrait
 {
@@ -43,7 +42,7 @@ trait SettingsTrait
      *
      * @throws \InvalidArgumentException on wrong data type given
      */
-    public function addSettings($data = array(), $replace = true)
+    public function addSettings($data = [], $replace = true)
     {
         $this->getSettings()->add($data, $replace);
 
@@ -88,9 +87,7 @@ trait SettingsTrait
         if (is_array($settings) || $settings instanceof ArrayAccess) {
             $this->settings = new Settings($settings);
         } else {
-            throw new InvalidArgumentException(
-                "Invalid argument given. Only the 'array' or 'ArrayAccess' implementing objects are supported."
-            );
+            throw new InvalidArgumentException('Only arrays or ArrayAccess implementing objects are supported.');
         }
 
         return $this;
