@@ -22,6 +22,7 @@ being used. Future releases may see additional options.
 * [add] `ConfigurableArrayObject` as base class for all variants (#13)
 * [add] `SettingsMutableInterface`, `ParametersMutableInterface`, `OptionsMutableInterface` (#13)
 * [add] `ParamsInterface` and `ParamsMutableInterface` to use for the others as a base (#13)
+* [chg] Autoloading in composer.json now uses PSR-4 instead of PSR-0.
 * [chg] Updated composer dependencies in lock file (only dev libs should be affected)
 
 ## 2.1.1 (2015/28/07)
