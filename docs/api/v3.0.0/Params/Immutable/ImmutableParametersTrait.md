@@ -1,9 +1,9 @@
 <small>Params\Immutable</small>
 
-ImmutableSettingsTrait
-======================
+ImmutableParametersTrait
+========================
 
-Trait that contains an ImmutableSettings instance to use for nestable configuration settings.
+Trait that contains an ImmutableParameters instance to use for nestable configuration parameters.
 
 Signature
 ---------
@@ -15,15 +15,15 @@ Methods
 
 The class defines the following methods:
 
-- [`hasSetting()`](#hasSetting) &mdash; Returns whether the setting exists or not.
-- [`getSetting()`](#getSetting) &mdash; Returns the value for the given key.
-- [`getSettingValues()`](#getSettingValues) &mdash; Allows to search for specific data values via JMESPath expressions.
-- [`getSettingsAsArray()`](#getSettingsAsArray) &mdash; Returns the data as an associative array.
-- [`getSettings()`](#getSettings) &mdash; Return this object&#039;s immutable settings instance.
+- [`hasParameter()`](#hasParameter) &mdash; Returns whether the parameter exists or not.
+- [`getParameter()`](#getParameter) &mdash; Returns the value for the given key.
+- [`getParameterValues()`](#getParameterValues) &mdash; Allows to search for specific data values via JMESPath expressions.
+- [`getParametersAsArray()`](#getParametersAsArray) &mdash; Returns the data as an associative array.
+- [`getParameters()`](#getParameters) &mdash; Return this object&#039;s immutable parameters instance.
 
-### `hasSetting()` <a name="hasSetting"></a>
+### `hasParameter()` <a name="hasParameter"></a>
 
-Returns whether the setting exists or not.
+Returns whether the parameter exists or not.
 
 #### Signature
 
@@ -33,7 +33,7 @@ Returns whether the setting exists or not.
 - _Returns:_ true, if key exists; false otherwise
     - `bool`
 
-### `getSetting()` <a name="getSetting"></a>
+### `getParameter()` <a name="getParameter"></a>
 
 Returns the value for the given key.
 
@@ -46,7 +46,7 @@ Returns the value for the given key.
 - _Returns:_ value for that key or default given
     - `mixed`
 
-### `getSettingValues()` <a name="getSettingValues"></a>
+### `getParameterValues()` <a name="getParameterValues"></a>
 
 Allows to search for specific data values via JMESPath expressions.
 
@@ -78,7 +78,7 @@ Some example expressions as a quick start:
     - [`RuntimeException`](http://php.net/class.RuntimeException) &mdash; e.g. if JMESPath cache directory cannot be written
     - [`InvalidArgumentException`](http://php.net/class.InvalidArgumentException) &mdash; e.g. if JMESPath builtin functions can&#039;t be called
 
-### `getSettingsAsArray()` <a name="getSettingsAsArray"></a>
+### `getParametersAsArray()` <a name="getParametersAsArray"></a>
 
 Returns the data as an associative array.
 
@@ -90,13 +90,13 @@ Returns the data as an associative array.
 - _Returns:_ with all data
     - `array`
 
-### `getSettings()` <a name="getSettings"></a>
+### `getParameters()` <a name="getParameters"></a>
 
-Return this object&#039;s immutable settings instance.
+Return this object&#039;s immutable parameters instance.
 
 #### Signature
 
 - It is a **public** method.
 - _Returns:_ instance used internally
-    - `Params\Immutable\SettingsImmutable`
+    - [`ImmutableParameters`](../../Params/Immutable/ImmutableParameters.md)
 

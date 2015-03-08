@@ -1,6 +1,6 @@
 <?php
 
-namespace Params\Tests;
+namespace Params\Tests\Fixtures;
 
 use Params\Immutable\ImmutableParameters;
 use Params\Immutable\ImmutableParametersTrait;

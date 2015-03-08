@@ -7,7 +7,7 @@
 [![Coverage Status](https://coveralls.io/repos/graste/params/badge.png)][3]
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/graste/params/badges/quality-score.png?b=master)][5]
 [![Dependency Status](https://www.versioneye.com/user/projects/53aefa3b404aa6df8c000082/badge.svg)][4]
-[![Stories in Ready](https://badge.waffle.io/graste/params.png?label=ready&title=Ready)](https://waffle.io/graste/params)
+[![Stories in Ready](https://badge.waffle.io/graste/params.png?label=ready&title=Ready)][15]
 [![Total Composer Downloads](https://poser.pugx.org/graste/params/d/total.png)][1]
 
 ## Purpose
@@ -48,6 +48,9 @@ $data = array(
         'str' => 'other nested string',
     )
 );
+
+// base object of the aliased versions:
+$arrayobj = new \Params\ConfigurableArrayObject($array);
 
 // create mutable parameters instance:
 $params = new \Params\Parameters($data);
@@ -137,7 +140,7 @@ To develop on this repository clone your fork and use the `Makefile` targets:
 
 - `make install` installs composer and all necessary vendor libraries
 - `make tests` runs the phpunit tests
-- `make code-sniffer` runs the code sniffer
+- `make code-sniffer-cli` runs the code sniffer on console
 
 The code tries to adhere to the following PHP-FIG standards: [PSR-4][6], [PSR-1][7] and [PSR-2][8]. The current license is [MIT](LICENSE.md).
 

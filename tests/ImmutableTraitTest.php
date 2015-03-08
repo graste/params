@@ -2,6 +2,8 @@
 
 namespace Params\Tests;
 
+use Params\Tests\Fixtures\ImmutableTraitTester;
+
 class ImmutableTraitTest extends BaseTestCase
 {
     public function testEmptyFailSafeConfig()

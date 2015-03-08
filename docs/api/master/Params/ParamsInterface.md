@@ -1,39 +1,39 @@
-<small>Params\Immutable</small>
+<small>Params</small>
 
-ImmutableSettingsTrait
-======================
+ParamsInterface
+===============
 
-Trait that contains an ImmutableSettings instance to use for nestable configuration settings.
+Interface for a class that wraps an associative array for more convenient access of keys and values while the actual values are not mutable via methods like set, add, remove etc.
 
 Signature
 ---------
 
-- It is a(n) **class**.
+- It is a(n) **interface**.
 
 Methods
 -------
 
-The class defines the following methods:
+The interface defines the following methods:
 
-- [`hasSetting()`](#hasSetting) &mdash; Returns whether the setting exists or not.
-- [`getSetting()`](#getSetting) &mdash; Returns the value for the given key.
-- [`getSettingValues()`](#getSettingValues) &mdash; Allows to search for specific data values via JMESPath expressions.
-- [`getSettingsAsArray()`](#getSettingsAsArray) &mdash; Returns the data as an associative array.
-- [`getSettings()`](#getSettings) &mdash; Return this object&#039;s immutable settings instance.
+- [`has()`](#has) &mdash; Returns whether the key exists or not.
+- [`get()`](#get) &mdash; Returns the value for the given key.
+- [`getKeys()`](#getKeys) &mdash; Returns all first level key names.
+- [`getValues()`](#getValues) &mdash; Allows to search for specific data values via JMESPath expressions.
+- [`toArray()`](#toArray) &mdash; Returns the data as an associative array.
 
-### `hasSetting()` <a name="hasSetting"></a>
+### `has()` <a name="has"></a>
 
-Returns whether the setting exists or not.
+Returns whether the key exists or not.
 
 #### Signature
 
 - It is a **public** method.
 - It accepts the following parameter(s):
-    - `$key` (`mixed`) &mdash; key to check
+    - `$key` (`mixed`) &mdash; name of key to check
 - _Returns:_ true, if key exists; false otherwise
     - `bool`
 
-### `getSetting()` <a name="getSetting"></a>
+### `get()` <a name="get"></a>
 
 Returns the value for the given key.
 
@@ -41,12 +41,22 @@ Returns the value for the given key.
 
 - It is a **public** method.
 - It accepts the following parameter(s):
-    - `$key` (`mixed`) &mdash; key to get value of
+    - `$key` (`mixed`) &mdash; name of key
     - `$default` (`mixed`) &mdash; value to return if key doesn&#039;t exist
 - _Returns:_ value for that key or default given
     - `mixed`
 
-### `getSettingValues()` <a name="getSettingValues"></a>
+### `getKeys()` <a name="getKeys"></a>
+
+Returns all first level key names.
+
+#### Signature
+
+- It is a **public** method.
+- _Returns:_ of keys
+    - `array`
+
+### `getValues()` <a name="getValues"></a>
 
 Allows to search for specific data values via JMESPath expressions.
 
@@ -63,7 +73,8 @@ Some example expressions as a quick start:
 
 #### See Also
 
-- `http://jmespath.readthedocs.org/en/latest/` &mdash; and https://github.com/mtdowling/jmespath.php
+- `http://jmespath.readthedocs.org/en/latest/`
+- `https://github.com/mtdowling/jmespath.php`
 
 #### Signature
 
@@ -78,7 +89,7 @@ Some example expressions as a quick start:
     - [`RuntimeException`](http://php.net/class.RuntimeException) &mdash; e.g. if JMESPath cache directory cannot be written
     - [`InvalidArgumentException`](http://php.net/class.InvalidArgumentException) &mdash; e.g. if JMESPath builtin functions can&#039;t be called
 
-### `getSettingsAsArray()` <a name="getSettingsAsArray"></a>
+### `toArray()` <a name="toArray"></a>
 
 Returns the data as an associative array.
 
@@ -87,16 +98,6 @@ Returns the data as an associative array.
 - It is a **public** method.
 - It accepts the following parameter(s):
     - `$recursive` (`bool`) &mdash; whether or not nested arrays should be included as array or object
-- _Returns:_ with all data
+- _Returns:_ of all data
     - `array`
-
-### `getSettings()` <a name="getSettings"></a>
-
-Return this object&#039;s immutable settings instance.
-
-#### Signature
-
-- It is a **public** method.
-- _Returns:_ instance used internally
-    - `Params\Immutable\SettingsImmutable`
 

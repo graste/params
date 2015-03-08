@@ -4,6 +4,7 @@ namespace Params;
 
 use ArrayAccess;
 use InvalidArgumentException;
+use Params\ConfigurableArrayObject;
 use Params\Immutable\ImmutableParametersTrait;
 use Params\Parameters;
 
@@ -35,7 +36,7 @@ trait ParametersTrait
     /**
      * Adds the given data (key/value pairs) to the current data.
      *
-     * @param array $data associative array or ArrayAccess implementing object
+     * @param array|ConfigurableArrayObject $data associative array or ConfigurableArrayObject implementing object
      * @param bool $replace whether or not to replace values of existing keys
      *
      * @return Parameters self instance for fluent API
@@ -78,16 +79,18 @@ trait ParametersTrait
     /**
      * Set an object's parameters.
      *
-     * @param mixed $parameters Either array or ArrayAccess implementing object.
+     * @param array|ConfigurableArrayObject $parameters Either array or ConfigurableArrayObject implementing object.
      *
      * @throws \InvalidArgumentException on wrong data type given
      */
     public function setParameters($parameters)
     {
-        if (is_array($parameters) || $parameters instanceof ArrayAccess) {
+        if ($parameters instanceof ConfigurableArrayObject) {
+            $this->parameters = new Parameters((array)$parameters);
+        } elseif (is_array($parameters)) {
             $this->parameters = new Parameters($parameters);
         } else {
-            throw new InvalidArgumentException('Only arrays or ArrayAccess implementing objects are supported.');
+            throw new InvalidArgumentException('Only arrays or ConfigurableArrayObject instances are supported.');
         }
 
         return $this;

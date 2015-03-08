@@ -28,8 +28,8 @@
         "phpunit/phpunit": "~4.3.0",
         "squizlabs/php_codesniffer": "~1.5.5",
         "satooshi/php-coveralls": "0.6.*",
-        "sami/sami": "~2.0.0",
-        "phine/sami-github": "~1.0.4"
+        "sami/sami": "^2.0.0",
+        "phine/sami-github": "^1.0.4"
     },
     "autoload": {
         "psr-4": {

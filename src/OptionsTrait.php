@@ -4,6 +4,7 @@ namespace Params;
 
 use ArrayAccess;
 use InvalidArgumentException;
+use Params\ConfigurableArrayObject;
 use Params\Immutable\ImmutableOptionsTrait;
 
 /**
@@ -34,7 +35,7 @@ trait OptionsTrait
     /**
      * Adds the given data (key/value pairs) to the current data.
      *
-     * @param array $data associative array or ArrayAccess implementing object
+     * @param array|ConfigurableArrayObject $data associative array or ConfigurableArrayObject implementing object
      * @param bool $replace whether or not to replace values of existing keys
      *
      * @return Options self instance for fluent API
@@ -77,16 +78,18 @@ trait OptionsTrait
     /**
      * Set an object's options.
      *
-     * @param mixed $options Either array or ArrayAccess implementing object.
+     * @param array|ConfigurableArrayObject $options Either array or ConfigurableArrayObject implementing object.
      *
      * @throws \InvalidArgumentException on wrong data type given
      */
     public function setOptions($options)
     {
-        if (is_array($options) || $options instanceof ArrayAccess) {
+        if ($options instanceof ConfigurableArrayObject) {
+            $this->options = new Options((array)$options);
+        } elseif (is_array($options)) {
             $this->options = new Options($options);
         } else {
-            throw new InvalidArgumentException('Only arrays or ArrayAccess implementing objects are supported.');
+            throw new InvalidArgumentException('Only arrays or ConfigurableArrayObject instances are supported.');
         }
 
         return $this;

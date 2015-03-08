@@ -31,29 +31,25 @@ composer:
 	fi
 
 
-install:
+install: composer
 
-	@make composer
 	@echo "[INFO] Installing vendor libraries."
 	@$(PHP) -d apc.enable_cli=0 -d allow_url_fopen=1 -d date.timezone="Europe/Berlin" composer.phar install --optimize-autoloader
 
 
-update:
+update: composer
 
-	@make composer
 	@echo "[INFO] Updating vendor libraries."
 	@$(PHP) -d apc.enable_cli=0 -d allow_url_fopen=1 -d date.timezone="Europe/Berlin" composer.phar update --optimize-autoloader
 
 
-tests:
+tests: folders
 
-	@make folders
 	@$(PHP) vendor/bin/phpunit tests/
 
 
-code-sniffer:
+code-sniffer: folders
 
-	@make folders
 	-@$(PHP) ./vendor/bin/phpcs --extensions=php --report=checkstyle --report-file=./build/reports/checkstyle.xml --standard=psr2 ./src/
 
 
@@ -62,9 +58,8 @@ code-sniffer-cli:
 	@$(PHP) ./vendor/bin/phpcs -p --report=full --standard=psr2 ./src
 
 
-scrutinizer:
+scrutinizer: tests
 
-	@make tests
 	@wget https://scrutinizer-ci.com/ocular.phar
 	@$(PHP) ocular.phar code-coverage:upload --format=php-clover ./build/logs/clover.xml
 
@@ -77,9 +72,8 @@ folders:
 	@mkdir -p ./build/cache
 
 
-docs:
+docs: folders
 
-	@make folders
 	@$(PHP) ./vendor/bin/sami.php update ./sami.php
 
 

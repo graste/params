@@ -13,7 +13,7 @@
 >
     <testsuites>
         <testsuite name="All Tests">
-            <directory>tests/Params</directory>
+            <directory>tests</directory>
         </testsuite>
     </testsuites>
 

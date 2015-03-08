@@ -2,8 +2,8 @@
 
 namespace Params;
 
-use ArrayAccess;
 use InvalidArgumentException;
+use Params\ConfigurableArrayObject;
 use Params\Immutable\ImmutableSettingsTrait;
 use Params\Settings;
 
@@ -35,7 +35,7 @@ trait SettingsTrait
     /**
      * Adds the given data (key/value pairs) to the current data.
      *
-     * @param array $data associative array or ArrayAccess implementing object
+     * @param array|ConfigurableArrayObject $data associative array or ConfigurableArrayObject implementing object
      * @param bool $replace whether or not to replace values of existing keys
      *
      * @return Settings self instance for fluent API
@@ -78,16 +78,18 @@ trait SettingsTrait
     /**
      * Set an object's settings.
      *
-     * @param mixed $settings Either array or ArrayAccess implementing object.
+     * @param array|ConfigurableArrayObject $settings Either array or ConfigurableArrayObject implementing object.
      *
      * @throws \InvalidArgumentException on wrong data type given
      */
     public function setSettings($settings)
     {
-        if (is_array($settings) || $settings instanceof ArrayAccess) {
+        if ($settings instanceof ConfigurableArrayObject) {
+            $this->settings = new Settings((array)$settings);
+        } elseif (is_array($settings)) {
             $this->settings = new Settings($settings);
         } else {
-            throw new InvalidArgumentException('Only arrays or ArrayAccess implementing objects are supported.');
+            throw new InvalidArgumentException('Only arrays or ConfigurableArrayObject instances are supported.');
         }
 
         return $this;

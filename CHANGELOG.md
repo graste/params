@@ -2,7 +2,7 @@
 
 All new features, changes and fixes should be listed here. Please use tickets to reference changes.
 
-## 3.0.0 (2015/03/01)
+## 3.0.0 (2015/03/08)
 
 This release may be a breaking change for people that used `instanceof` checks
 or set a different default iterator for the `ArrayObject` class. For People

@@ -1,9 +1,9 @@
 <small>Params\Immutable</small>
 
-ImmutableSettingsTrait
-======================
+ImmutableOptionsTrait
+=====================
 
-Trait that contains an ImmutableSettings instance to use for nestable configuration settings.
+Trait that contains an ImmutableOptions instance to use for nestable configuration options.
 
 Signature
 ---------
@@ -15,15 +15,15 @@ Methods
 
 The class defines the following methods:
 
-- [`hasSetting()`](#hasSetting) &mdash; Returns whether the setting exists or not.
-- [`getSetting()`](#getSetting) &mdash; Returns the value for the given key.
-- [`getSettingValues()`](#getSettingValues) &mdash; Allows to search for specific data values via JMESPath expressions.
-- [`getSettingsAsArray()`](#getSettingsAsArray) &mdash; Returns the data as an associative array.
-- [`getSettings()`](#getSettings) &mdash; Return this object&#039;s immutable settings instance.
+- [`hasOption()`](#hasOption) &mdash; Returns whether the option exists or not.
+- [`getOption()`](#getOption) &mdash; Returns the value for the given key.
+- [`getOptionValues()`](#getOptionValues) &mdash; Allows to search for specific data values via JMESPath expressions.
+- [`getOptionsAsArray()`](#getOptionsAsArray) &mdash; Returns the data as an associative array.
+- [`getOptions()`](#getOptions) &mdash; Return this object&#039;s immutable options instance.
 
-### `hasSetting()` <a name="hasSetting"></a>
+### `hasOption()` <a name="hasOption"></a>
 
-Returns whether the setting exists or not.
+Returns whether the option exists or not.
 
 #### Signature
 
@@ -33,7 +33,7 @@ Returns whether the setting exists or not.
 - _Returns:_ true, if key exists; false otherwise
     - `bool`
 
-### `getSetting()` <a name="getSetting"></a>
+### `getOption()` <a name="getOption"></a>
 
 Returns the value for the given key.
 
@@ -46,7 +46,7 @@ Returns the value for the given key.
 - _Returns:_ value for that key or default given
     - `mixed`
 
-### `getSettingValues()` <a name="getSettingValues"></a>
+### `getOptionValues()` <a name="getOptionValues"></a>
 
 Allows to search for specific data values via JMESPath expressions.
 
@@ -78,7 +78,7 @@ Some example expressions as a quick start:
     - [`RuntimeException`](http://php.net/class.RuntimeException) &mdash; e.g. if JMESPath cache directory cannot be written
     - [`InvalidArgumentException`](http://php.net/class.InvalidArgumentException) &mdash; e.g. if JMESPath builtin functions can&#039;t be called
 
-### `getSettingsAsArray()` <a name="getSettingsAsArray"></a>
+### `getOptionsAsArray()` <a name="getOptionsAsArray"></a>
 
 Returns the data as an associative array.
 
@@ -90,13 +90,13 @@ Returns the data as an associative array.
 - _Returns:_ with all data
     - `array`
 
-### `getSettings()` <a name="getSettings"></a>
+### `getOptions()` <a name="getOptions"></a>
 
-Return this object&#039;s immutable settings instance.
+Return this object&#039;s immutable options instance.
 
 #### Signature
 
 - It is a **public** method.
 - _Returns:_ instance used internally
-    - `Params\Immutable\SettingsImmutable`
+    - [`ImmutableOptions`](../../Params/Immutable/ImmutableOptions.md)
 

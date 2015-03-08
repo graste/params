@@ -1,10 +1,10 @@
 <?php
 
-namespace Params\Tests;
+namespace Params\Tests\Fixtures;
 
 class TraitTester
 {
     use \Params\ParametersTrait;
     use \Params\OptionsTrait;
-    //use \Params\SettingsTrait;
+    use \Params\SettingsTrait;
 }
