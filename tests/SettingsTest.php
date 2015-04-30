@@ -438,6 +438,8 @@ EOT;
         $this->assertEquals([0 => 0, 1 => 1], $params->getValues('[]'));
         $this->assertEquals(0, $params->get(0)->get(0));
         $this->assertEquals(1, $params->get(0)->get(1));
+        $this->assertEquals(0, $params->get(0)[0]);
+        $this->assertEquals(0, $params[0][0]);
         $this->assertEquals(0, $params->getValues('[0][0]'));
         $this->assertEquals(1, $params->getValues('[0][1]'));
     }
@@ -450,6 +452,6 @@ EOT;
 
         $foo = (array)$params;
         $this->assertEquals(1, $foo[0][1]);
-        $this->assertInstanceOf(Settings::CLASS, $foo[0]);
+        $this->assertInstanceOf('Params\\Settings', $foo[0]);
     }
 }
