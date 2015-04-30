@@ -429,4 +429,27 @@ EOT;
         json_encode($params, JSON_PRETTY_PRINT);
         $this->assertEquals(JSON_ERROR_NONE, json_last_error());
     }
+
+    public function testNumericArrayIndicesWorks()
+    {
+        $params = new Settings([0 => [0 => 0, 1 => 1]]);
+        $this->assertEquals([0 => 0, 1 => 1], $params->get(0)->toArray());
+        $this->assertEquals([0 => 0, 1 => 1], $params->getValues('[0]'));
+        $this->assertEquals([0 => 0, 1 => 1], $params->getValues('[]'));
+        $this->assertEquals(0, $params->get(0)->get(0));
+        $this->assertEquals(1, $params->get(0)->get(1));
+        $this->assertEquals(0, $params->getValues('[0][0]'));
+        $this->assertEquals(1, $params->getValues('[0][1]'));
+    }
+
+    public function testNumericArrayCastingWorks()
+    {
+        $params = new Settings([0 => [0 => 0, 1 => 1]]);
+        $this->assertEquals([0 => 0, 1 => 1], (array)$params->get(0));
+        $this->assertEquals([0 => [0 => 0, 1 => 1]], $params->toArray());
+
+        $foo = (array)$params;
+        $this->assertEquals(1, $foo[0][1]);
+        $this->assertInstanceOf(Settings::CLASS, $foo[0]);
+    }
 }
