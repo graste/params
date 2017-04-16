@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/graste/params.png?label=ready&title=Ready)](https://waffle.io/graste/params)
 # Params
 
 [![Latest-Stable-Version](https://poser.pugx.org/graste/params/v/stable.svg)][1]
