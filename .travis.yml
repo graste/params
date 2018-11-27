@@ -1,10 +1,10 @@
 language: php
 
 php:
-  - 5.4
-  - 5.5
   - 5.6
-  - 7
+  - 7.0
+  - 7.1
+  - 7.2
   - nightly
   - hhvm
 
@@ -14,15 +14,3 @@ script:
   - "make tests"
   - "make code-sniffer-cli"
 
-after_script:
-  - "php vendor/bin/coveralls -v"
-  - "make scrutinizer"
-
-notifications:
-  irc:
-    channels:
-      - "chat.freenode.net#environaut"
-    on_success: always
-    on_failure: always
-    use_notice: false
-    skip_join: false

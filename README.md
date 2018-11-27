@@ -4,9 +4,6 @@
 [![License](https://poser.pugx.org/graste/params/license.svg)][14]
 [![Latest Unstable Version](https://poser.pugx.org/graste/params/v/unstable.svg)][1]
 [![Build Status](https://secure.travis-ci.org/graste/params.png)][2]
-[![Coverage Status](https://coveralls.io/repos/graste/params/badge.png)][3]
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/graste/params/badges/quality-score.png?b=master)][5]
-[![Dependency Status](https://www.versioneye.com/user/projects/53aefa3b404aa6df8c000082/badge.svg)][4]
 [![Stories in Ready](https://badge.waffle.io/graste/params.png?label=ready&title=Ready)][15]
 [![Total Composer Downloads](https://poser.pugx.org/graste/params/d/total.png)][1]
 
@@ -16,7 +13,7 @@ Array wrapper object that eases the retrieval of values. It provides a `get` met
 
 ## Requirements and installation
 
-- PHP v5.4+
+- PHP v5.6+
 
 Install the library via [Composer][10]:
 
@@ -27,7 +24,7 @@ Adding it manually as a vendor library requirement to the `composer.json` file o
 ```json
 {
     "require": {
-        "graste/params": "~3.0.0"
+        "graste/params": "^3.0.0"
     }
 }
 ```
@@ -127,10 +124,6 @@ $params->filter->bool->must[1]->term->live = false;
 $params->get('filter')->set('bool', …);
 $params->filter->bool->must[] = array(…);
 ```
-
-## Community
-
-None, but you may join the `#environaut` freenode IRC channel anytime ([`irc://irc.freenode.org/environaut`](irc://irc.freenode.org/environaut)) :-)
 
 ## Contribution
 

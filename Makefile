@@ -11,7 +11,6 @@ help:
 	@echo ""
 	@echo "  install         - install composer and vendor libraries"
 	@echo "  update          - update composer and vendor libraries"
-	@echo "  docs            - generate API documentation into 'docs/api' folder"
 	@echo "  tests           - run all tests and create test coverage in 'build/reports"
 	@echo "  codesniffer     - create codesniffer report in 'build/reports' folder"
 	@echo "  codesniffer-cli - run codesniffer and display report in console"
@@ -58,12 +57,6 @@ code-sniffer-cli:
 	@$(PHP) ./vendor/bin/phpcs -p --report=full --standard=psr2 ./src
 
 
-scrutinizer: tests
-
-	@wget https://scrutinizer-ci.com/ocular.phar
-	@$(PHP) ocular.phar code-coverage:upload --format=php-clover ./build/logs/clover.xml
-
-
 folders:
 
 	@mkdir -p ./docs/api
@@ -72,11 +65,6 @@ folders:
 	@mkdir -p ./build/cache
 
 
-docs: folders
-
-	@$(PHP) ./vendor/bin/sami.php update ./sami.php
-
-
-.PHONY: tests docs help composer install update code-sniffer code-sniffer-cli folders scrutinizer
+.PHONY: tests help composer install update code-sniffer code-sniffer-cli folders
 
 # vim: ts=4:sw=4:noexpandtab:
