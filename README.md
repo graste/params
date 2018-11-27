@@ -13,7 +13,7 @@ Array wrapper object that eases the retrieval of values. It provides a `get` met
 
 ## Requirements and installation
 
-- PHP v5.6+
+- PHP ^7.0
 
 Install the library via [Composer][10]:
 
