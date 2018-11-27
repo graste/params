@@ -4,8 +4,8 @@ All new features, changes and fixes should be listed here. Please use tickets to
 
 ## 3.1.0 (2018/11/27)
 
-- [chg] bump dependencies of libraries and allow PHP version ^5.6 or ^7.0
-- [chg] travisci now tests PHP versions 5.6, 7.0, 7.1 and 7.2 (an still nightly and hhvm)
+- [chg] bump dependencies of libraries and support PHP version ^7.0
+- [chg] travisci now tests PHP versions 7.0, 7.1 and 7.2 (plus nightly and hhvm)
 - [del] removed support to generate docs via sami (as it's abandoned and I'm not in the mood to search a replacement)
 - [del] scrutinizer support for codequality etc. has been removed (was used in CI and local dev)
 - [fix] phpunit configuration used a nonexistant directory in the filter whitelist
